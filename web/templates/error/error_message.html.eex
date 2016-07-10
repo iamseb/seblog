@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>EmpathAI - Creative Superpowers for everyone!</title>
+    <meta id="viewport" name="viewport" content ="width=device-width, initial-scale=1.0, overflow:hidden, user-scalable=no" />
+    <link rel="stylesheet" href="/css/public.css"">
+    <script data-cfasync="false" src="https://use.typekit.net/hxt4lic.js"></script>
+    <script data-cfasync="false">try{Typekit.load({ async: true });}catch(e){}</script>
+    </head>
+
+    <body>
+
+    <div class="visual row">
+        <div class="content">
+            <%= markdown("error-message") %>
+        </div>
+        <div class="content sidebar">
+            <div>
+                <%#
+                <a href="https://slack.com/oauth/authorize?scope=bot&client_id=31496857014.36967641943&redirect_uri=http://localhost:4000/oauth"><img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" /></a>
+                #%>
+                <h2>Don't miss our newsletter!</h2>
+                <p>Every week we send out a summary of news and events covering the intersection of Machine Learning, creativity, and human interaction.</p>
+                <form class="newsletter-signup" action="https://tinyletter.com/empathAI" method="post">
+                <label for="email">Email address</label>
+                <input type="email" placeholder="you@yourdomain.com" class="text-input" name="email" id="tlemail" required>
+                <input type="hidden" class="text-input" value="1" name="embed">
+                <input type="submit" class="button" value="Subscribe">
+                </form>
+            </div>
+        </div>
+        
+    </div>
+
+    
+    </body>
+</html>

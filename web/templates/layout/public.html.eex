@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><%= assigns[:page_title] || "From the mind of Seb - sebpotter.com" %></title>
+    <meta id="viewport" name="viewport" content ="width=device-width, initial-scale=1.0, overflow:hidden, user-scalable=no" />
+    <link rel="stylesheet" href="<%= static_path(@conn, "/css/public.css") %>">
+    <script data-cfasync="false" src="https://use.typekit.net/hxt4lic.js"></script>
+    <script data-cfasync="false">try{Typekit.load({ async: true });}catch(e){}</script>
+    </head>
+
+    <body>
+        <nav class="loading">
+            <a href="/" class="brand"><span>Seb Potter</span></a>
+            <!-- responsiveness-->
+            <input id="bmenu" type="checkbox" class="show">
+            <label for="bmenu" class="burger toggle pseudo button">menu</label>
+            <div class="menu">
+                <a href="https://www.linkedin.com/in/sebpotter" class="pseudo button">Profile</a>
+                <a href="https://github.com/iamseb/seblog" target="_blank" class="pseudo button icon-g">Github</a>
+            </div>
+        </nav>            
+
+    <main>
+
+        <div class="visual row">
+            <%= render @view_module, @view_template, assigns %>
+        </div>
+
+    </main>
+    <%= render_existing view_module(@conn), "scripts.html", assigns %>
+    <script>// Transparent nav handler
+var nav = document.querySelector('nav');
+function navScroll(){
+  var className = 'transparent';
+  var top = window.scrollY ? window.scrollY : document.documentElement.scrollTop;
+  if (top > 0) {
+    nav.classList.remove(className);
+  } else {
+    nav.classList.add('transparent');
+    nav.classList.add(className);
+  }
+};
+window.onscroll = navScroll;
+navScroll();
+setTimeout(function(){ nav.classList.remove('loading'); }, 10);
+</script>
+    </body>
+</html>

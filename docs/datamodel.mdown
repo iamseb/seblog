@@ -1,0 +1,17 @@
+Data Model
+
+Admin - email, hashed password
+
+Blog post - 
+    - title
+    - slug
+    - status
+    - content
+    - excerpt
+    - pub_date
+    - tags
+
+Tag - 
+    - slug
+    - name
+    - articles
