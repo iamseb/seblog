@@ -73,4 +73,11 @@ config :logger, level: :info
 # Finally import the config/prod.secret.exs
 # which should be versioned separately.
 
-import_config "config.secret.exs"
+config :guardian, Guardian,
+  allowed_algos: ["HS512"],
+  verify_module: Guardian.JWT,
+  issuer: "Xempathai",
+  ttl: { 30, :days},
+  verify_issuer: true,
+  secret_key: System.get_env("SECRET_KEY_BASE"),
+  serializer: Xempathai.GuardianSerializer
