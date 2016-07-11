@@ -124,7 +124,7 @@ div.content .post iframe {
 
 nav {
   transition:all .4s !important;
-  background: #333;
+  background: rgba(48, 48, 48, 0.9);
   position: fixed;
   top: 0;
   left: 0;
@@ -179,9 +179,12 @@ nav.transparent a {
 nav .pseudo.button { color: #fff; }
 nav .pseudo.button:hover { background: rgba(255,255,255,0.6) }
 
-nav.transparent .pseudo.button { color: #222; }
+nav.transparent .pseudo.button { color: #fff; }
 
 nav.transparent .pseudo.button:hover{background:rgba(255,255,255,0.2)}
+
+nav div.brand-row { background: rgba(64, 64, 64, 0.6); height: 1px; transition: all .8s !important}
+nav.transparent div.brand-row { background: rgba(64, 64, 64, 1); height: 3em; transition: all .8s !important}
 
 .burger {
     display: none;

@@ -14,16 +14,18 @@
     <body>
         <nav class="loading">
             <h1>Seb Potter</h1><br clear="all" />
-            <a href="/" class="brand"><span>From the mind of Seb</span></a>
-            <!-- responsiveness-->
-            <input id="bmenu" type="checkbox" class="show">
-            <label for="bmenu" class="burger toggle pseudo button">menu</label>
-            <div class="menu">
-                <a href="https://www.linkedin.com/in/sebpotter" class="pseudo button">Profile</a>
-                <a href="https://github.com/iamseb/seblog" target="_blank" class="pseudo button icon-g">Github</a>
+            <div class="brand-row">
+                <a href="/" class="brand"><span>From the mind of Seb</span></a>
+                <!-- responsiveness-->
+                <input id="bmenu" type="checkbox" class="show">
+                <label for="bmenu" class="burger toggle pseudo button">menu</label>
+                <div class="menu">
+                    <a href="https://www.linkedin.com/in/sebpotter" class="pseudo button">Profile</a>
+                    <a href="https://github.com/iamseb/seblog" target="_blank" class="pseudo button icon-g">Github</a>
+                </div>
             </div>
         </nav>            
-
+        <br clear="all"/>
     <main>
 
         <div class="visual row">
