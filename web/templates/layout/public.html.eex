@@ -7,8 +7,6 @@
     <title><%= assigns[:page_title] || "From the mind of Seb - sebpotter.com" %></title>
     <meta id="viewport" name="viewport" content ="width=device-width, initial-scale=1.0, overflow:hidden, user-scalable=no" />
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/public.css") %>">
-    <script src="https://use.typekit.net/hxt4lic.js"></script>
-    <script >try{Typekit.load({ async: true });}catch(e){}</script>
     </head>
 
     <body>
