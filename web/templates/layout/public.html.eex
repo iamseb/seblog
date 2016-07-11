@@ -13,7 +13,8 @@
 
     <body>
         <nav class="loading">
-            <a href="/" class="brand"><span>Seb Potter</span></a>
+            <h1>Seb Potter</h1><br clear="all" />
+            <a href="/" class="brand"><span>From the mind of Seb</span></a>
             <!-- responsiveness-->
             <input id="bmenu" type="checkbox" class="show">
             <label for="bmenu" class="burger toggle pseudo button">menu</label>

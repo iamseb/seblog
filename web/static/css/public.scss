@@ -124,7 +124,7 @@ div.content .post iframe {
 
 nav {
   transition:all .4s !important;
-  background: #222;
+  background: #333;
   position: fixed;
   top: 0;
   left: 0;
@@ -138,6 +138,24 @@ nav.transparent{
   background: none;
   transition:all .4s !important;
   color: #222;
+  vertical-align: top;
+}
+
+nav h1 {
+    max-height: 0;
+    overflow: hidden;
+    color: transparent;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 0 0.3em;
+    transition:all .4s !important;
+}
+
+nav.transparent h1 {
+    color: #222;
+    max-height: 200px;
+    overflow: visible;
+    transition:all .4s !important;
 }
 
 nav .brand, nav .menu, nav .burger {
@@ -159,6 +177,7 @@ nav.transparent a {
 }
 
 nav .pseudo.button { color: #fff; }
+nav .pseudo.button:hover { background: rgba(255,255,255,0.6) }
 
 nav.transparent .pseudo.button { color: #222; }
 
