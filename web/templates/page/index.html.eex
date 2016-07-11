@@ -1,4 +1,5 @@
 <div class="content">
+    <br>
     <%= for post <- @posts do %>
     <div class="row">
         <div class="content post format-<%= post.format %>">

@@ -8,7 +8,7 @@ body,
 main {
     display: block;
     color: #333;
-    background: #fff;
+    background: #efefef;
     width: 100%;
     height: 100%;
     margin: 0;
@@ -18,6 +18,9 @@ main {
 
 article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, section, summary { display: block }
 
+body {
+  background: #efefef;
+}
 
 html {
   opacity: 1;
@@ -101,8 +104,10 @@ h2 {
 @media all and (min-width: 960px) {
     .sidebar {
         width: 38%;
+        font-size: 0.8em;
     }
 }
+
 
 div.grid {
     display: flex;
@@ -124,18 +129,18 @@ div.content .post iframe {
 
 nav {
   transition:all .4s !important;
-  background: rgba(48, 48, 48, 0.9);
+  // background: rgba(48, 48, 48, 0.9);
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  height: 3em;
+  // height: 3em;
   color: #fff;
 }
 
 nav.transparent{
   box-shadow:none;
-  background: none;
+  // background: none;
   transition:all .4s !important;
   color: #222;
   vertical-align: top;
@@ -155,6 +160,7 @@ nav.transparent h1 {
     color: #222;
     max-height: 200px;
     overflow: visible;
+    margin-bottom: 0.3em;
     transition:all .4s !important;
 }
 
@@ -183,8 +189,16 @@ nav.transparent .pseudo.button { color: #fff; }
 
 nav.transparent .pseudo.button:hover{background:rgba(255,255,255,0.2)}
 
-nav div.brand-row { background: rgba(64, 64, 64, 0.6); height: 1px; transition: all .8s !important}
-nav.transparent div.brand-row { background: rgba(64, 64, 64, 1); height: 3em; transition: all .8s !important}
+nav div.brand-row { 
+  background: rgba(16, 16, 16, 0.9); 
+  height: 3em; 
+  transition: all .4s !important
+}
+nav.transparent div.brand-row { 
+  background: rgba(32,32,32,1); 
+  height: 3em; 
+  transition: all .4s !important
+}
 
 .burger {
     display: none;
@@ -192,4 +206,13 @@ nav.transparent div.brand-row { background: rgba(64, 64, 64, 1); height: 3em; tr
 
 @media all and (max-width: 960px){
   nav .menu{color:#333}
+}
+
+
+div.content.post {
+  background: #fff;
+  border-radius: 2px;
+  padding: 1em;
+  padding-top: 0;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2),transparent 0 0 0,transparent 0 0 0,transparent 0 0 0,transparent 0 0 0;
 }

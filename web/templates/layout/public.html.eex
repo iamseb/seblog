@@ -13,7 +13,7 @@
 
     <body>
         <nav class="loading">
-            <h1>Seb Potter</h1><br clear="all" />
+            <h1>Seb Potter</h1>
             <div class="brand-row">
                 <a href="/" class="brand"><span>From the mind of Seb</span></a>
                 <!-- responsiveness-->
