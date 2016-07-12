@@ -78,6 +78,7 @@ defmodule Seblog.PostController do
     IO.inspect {key, secret}
     cond do
       secret == key -> 
+        IO.inspect params
         ifttt(conn, post)
       true -> 
         text(conn, "Bad Key")
