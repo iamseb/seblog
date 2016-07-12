@@ -35,7 +35,7 @@ defmodule Seblog.Post do
     |> String.split("<!-- break -->", trim: true) 
     |> Enum.at(0)
     
-    put_change(changeset, :excerpt, excerpt
+    put_change(changeset, :excerpt, excerpt)
   end
 
   def slugify(changeset) do
