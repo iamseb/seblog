@@ -86,14 +86,15 @@ defmodule Seblog.PostController do
   end
 
 
-  def ifttt(conn, post = %{"url" => url, "title" => title, "content" => content, "image" => image}) do
+  def ifttt(conn, _post = %{"url" => url, "title" => title, "content" => content, "image" => image}) do
     read_more = "\n<p><a href=\"#{url}\">Read Article</a></p>"
     img = "<img src=\"#{image}\" />\n"
     content = img <> content <> read_more
     changeset = Post.changeset(
       %Post{}, 
-      %{"title" => title, "content" => "content", "status" => "draft"}
+      %{"title" => title, "content" => content, "status" => "draft"}
     )
+    Repo.insert!(Post, changeset)
     text(conn, "ok")
   end
 

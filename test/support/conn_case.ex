@@ -29,14 +29,41 @@ defmodule Seblog.ConnCase do
 
       # The default endpoint for testing
       @endpoint Seblog.Endpoint
+
+      alias Seblog.Admin
+
+      @default_opts [
+        store: :cookie,
+        key: "foobar",
+        encryption_salt: "encrypted cookie salt",
+        signing_salt: "signing salt",
+        log: false
+      ]
+
+      @signing_opts Plug.Session.init(Keyword.put(@default_opts, :encrypt, false))
+
+      setup do
+        Repo.insert!(%Admin{:email => "test@example.com", :password_hash => Comeonin.Bcrypt.hashpwsalt("test")})
+        conn = build_conn() 
+        |> Plug.Session.call(@signing_opts)
+        |> fetch_session
+        {:ok, conn} = Seblog.Auth.login_by_email_and_pass(conn, "test@example.com", "test", 
+                                                 repo: Repo)
+        Guardian.Plug.current_resource(conn)
+
+        %{
+          conn: conn
+        }
+      end
+
     end
   end
 
   setup tags do
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Seblog.Repo)
     unless tags[:async] do
-      Ecto.Adapters.SQL.restart_test_transaction(Seblog.Repo, [])
+      Ecto.Adapters.SQL.Sandbox.mode(Seblog.Repo, {:shared, self()})
     end
-
-    {:ok, conn: Phoenix.ConnTest.conn()}
+    {:ok, conn: Phoenix.ConnTest.build_conn()}
   end
 end

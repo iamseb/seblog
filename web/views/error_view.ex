@@ -1,12 +1,12 @@
 defmodule Seblog.ErrorView do
   use Seblog.Web, :view
 
-  def render("404.html", _assigns) do
-    render "not_found.html", %{}
+def render("404.html", _assigns) do
+    "Page not found"
   end
 
   def render("500.html", _assigns) do
-    render "error_message.html", %{}
+    "Server internal error"
   end
 
   # In case no render clause matches or no

@@ -2,8 +2,13 @@ defmodule Seblog.AdminControllerTest do
   use Seblog.ConnCase
 
   alias Seblog.Admin
-  @valid_attrs %{email: "some content", password_hash: "some content"}
+  @valid_attrs %{email: "test2@example.com", password_hash: "some content"}
+  @reg_attrs %{email: "test2@example.com", password: "some content"}
   @invalid_attrs %{}
+
+  setup do
+    %{conn: build_conn}
+  end
 
   test "lists all entries on index", %{conn: conn} do
     conn = get conn, admin_path(conn, :index)
@@ -16,9 +21,9 @@ defmodule Seblog.AdminControllerTest do
   end
 
   test "creates resource and redirects when data is valid", %{conn: conn} do
-    conn = post conn, admin_path(conn, :create), admin: @valid_attrs
+    conn = post conn, admin_path(conn, :create), admin: @reg_attrs
     assert redirected_to(conn) == admin_path(conn, :index)
-    assert Repo.get_by(Admin, @valid_attrs)
+    assert Repo.get_by(Admin, email: @reg_attrs.email)
   end
 
   test "does not create resource and renders errors when data is invalid", %{conn: conn} do
@@ -34,7 +39,7 @@ defmodule Seblog.AdminControllerTest do
 
   test "renders page not found when id is nonexistent", %{conn: conn} do
     assert_error_sent 404, fn ->
-      get conn, admin_path(conn, :show, -1)
+      get conn, admin_path(conn, :show, "11111111-1111-1111-1111-111111111111")
     end
   end
 
@@ -46,9 +51,9 @@ defmodule Seblog.AdminControllerTest do
 
   test "updates chosen resource and redirects when data is valid", %{conn: conn} do
     admin = Repo.insert! %Admin{}
-    conn = put conn, admin_path(conn, :update, admin), admin: @valid_attrs
+    conn = put conn, admin_path(conn, :update, admin), admin: @reg_attrs
     assert redirected_to(conn) == admin_path(conn, :show, admin)
-    assert Repo.get_by(Admin, @valid_attrs)
+    assert Repo.get_by(Admin, email: @valid_attrs.email)
   end
 
   test "does not update chosen resource and renders errors when data is invalid", %{conn: conn} do

@@ -18,7 +18,7 @@ defmodule Seblog.Admin do
     If no params are provided, an invalid changeset is returned
     with no validation performed.
     """
-    def changeset(model, params \\ :empty) do
+    def changeset(model, params \\ %{}) do
         model
         |> cast(params, ~w(email), [])
         |> validate_format(:email, ~r/@/)

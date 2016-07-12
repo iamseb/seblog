@@ -17,3 +17,8 @@ config :seblog, Seblog.Repo,
   database: "seblog_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
+
+import_config "config.secret.exs"
+
+config :guardian, Guardian,
+  serializer: Seblog.TestGuardianSerializer

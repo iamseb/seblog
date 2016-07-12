@@ -29,7 +29,7 @@ defmodule Seblog.Router do
 
   scope "/", Seblog do
     pipe_through [:browser, :browser_auth]
-    get "/:year/:date/:slug/edit", PostController, :edit
+    get "/:year/:date/:slug/write", PostController, :edit
     resources "/admin/posts", PostController
     resources "/admin/tags", TagController
   end

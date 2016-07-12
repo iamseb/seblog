@@ -26,8 +26,9 @@ defmodule Seblog.ModelCase do
   end
 
   setup tags do
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Seblog.Repo)
     unless tags[:async] do
-      Ecto.Adapters.SQL.restart_test_transaction(Seblog.Repo, [])
+      Ecto.Adapters.SQL.Sandbox.mode(Seblog.Repo, {:shared, self()})
     end
 
     :ok

@@ -3,7 +3,7 @@ defmodule Seblog.AdminTest do
 
   alias Seblog.Admin
 
-  @valid_attrs %{email: "some content", password_hash: "some content"}
+  @valid_attrs %{email: "test-12@example.com", password_hash: "some content"}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do

@@ -34,7 +34,7 @@ defmodule Seblog.TagControllerTest do
 
   test "renders page not found when id is nonexistent", %{conn: conn} do
     assert_error_sent 404, fn ->
-      get conn, tag_path(conn, :show, -1)
+      get conn, tag_path(conn, :show, "11111111-1111-1111-1111-111111111111")
     end
   end
 

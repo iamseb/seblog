@@ -25,21 +25,27 @@ defmodule Seblog.Post do
   """
   def changeset(model, params \\ %{}) do
     model
+    |> cast(params, @required_fields, @optional_fields)
     |> make_excerpt
     |> slugify
-    |> cast(params, @required_fields, @optional_fields)
   end
 
   def make_excerpt(changeset) do
-    excerpt = Map.get(changeset.changes, "content")
-    |> String.split("<!-- break -->", trim: true) 
-    |> Enum.at(0)
+    excerpt = get_change(changeset, :content)
+    excerpt = cond do
+      excerpt != nil ->
+        excerpt
+        |> String.split("<!-- break -->", trim: true) 
+        |> Enum.at(0)
+      true ->
+        ""
+    end
     
     put_change(changeset, :excerpt, excerpt)
   end
 
   def slugify(changeset) do
-    slug = Map.get(changeset.changes, "title")
+    slug = get_change(changeset, :title)
     |> Slugger.slugify_downcase
     
     put_change(changeset, :slug, slug)

@@ -18,7 +18,7 @@ defmodule Seblog.PostControllerTest do
   test "creates resource and redirects when data is valid", %{conn: conn} do
     conn = post conn, post_path(conn, :create), post: @valid_attrs
     assert redirected_to(conn) == post_path(conn, :index)
-    assert Repo.get_by(Post, @valid_attrs)
+    assert Repo.get_by(Post, slug: Slugger.slugify_downcase("some content"))
   end
 
   test "does not create resource and renders errors when data is invalid", %{conn: conn} do
@@ -34,7 +34,7 @@ defmodule Seblog.PostControllerTest do
 
   test "renders page not found when id is nonexistent", %{conn: conn} do
     assert_error_sent 404, fn ->
-      get conn, post_path(conn, :show, -1)
+      get conn, post_path(conn, :show, "11111111-1111-1111-1111-111111111111")
     end
   end
 
@@ -48,7 +48,7 @@ defmodule Seblog.PostControllerTest do
     post = Repo.insert! %Post{}
     conn = put conn, post_path(conn, :update, post), post: @valid_attrs
     assert redirected_to(conn) == post_path(conn, :show, post)
-    assert Repo.get_by(Post, @valid_attrs)
+    assert Repo.get_by(Post, slug: Slugger.slugify_downcase("some content"))
   end
 
   test "does not update chosen resource and renders errors when data is invalid", %{conn: conn} do
