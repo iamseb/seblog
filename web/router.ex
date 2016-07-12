@@ -21,6 +21,12 @@ defmodule Seblog.Router do
     plug :accepts, ["json"]
   end
 
+
+  scope "/", Seblog do
+    pipe_through [:api]
+    put "/admin/posts/ifttt", PostController, :ifttt
+  end
+
   scope "/", Seblog do
     pipe_through [:browser, :browser_auth]
     get "/:year/:date/:slug/edit", PostController, :edit

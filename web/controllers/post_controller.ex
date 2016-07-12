@@ -72,6 +72,22 @@ defmodule Seblog.PostController do
     |> redirect(to: post_path(conn, :index))
   end
 
+  def ifttt(conn, params = %{"key" => System.get_env("SECRET_KEY_BASE"), "post" => %{"url" => url, "title" => title, "content" => content, "image" => image}}) do
+    read_more = "\n<p><a href=\"#{url}\">Read Article</a></p>"
+    img = "<img src=\"#{image}\" />\n"
+    content = img <> content <> read_more
+    changeset = Post.changeset(%Post{}, %{"title" => title, "content" => "content", "status" => "draft"})
+    text(conn, "ok")
+  end
+
+  def ifttt(conn, params = %{"key" => _bad_key}) do
+    text(conn, "really not ok")
+  end
+
+  def ifttt(conn, _params) do
+    text(conn, "bad format")
+  end
+
 
 end
 
