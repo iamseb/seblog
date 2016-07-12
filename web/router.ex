@@ -24,7 +24,7 @@ defmodule Seblog.Router do
 
   scope "/", Seblog do
     pipe_through [:api]
-    put "/admin/posts/ifttt", PostController, :ifttt
+    post "/admin/posts/ifttt", PostController, :ifttt
   end
 
   scope "/", Seblog do

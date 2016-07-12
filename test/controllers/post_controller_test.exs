@@ -63,4 +63,15 @@ defmodule Seblog.PostControllerTest do
     assert redirected_to(conn) == post_path(conn, :index)
     refute Repo.get(Post, post.id)
   end
+
+  @ifttt_attrs %{content: "This is some content", title: "This is a title", url: "https://sebpotter.com", image: "http://lorempixel.com/800/600/nature/"}
+
+  test "creates post from ifttt web call", %{} do
+    conn = build_conn
+    key = Application.get_env(:seblog, Seblog.Endpoint)[:secret_key_base]
+    uri = post_path(conn, :ifttt) <> "?key=" <> URI.encode(key)
+    conn = post conn, uri, post: @ifttt_attrs
+    assert text_response(conn, 200) =~ "ok"
+    assert Repo.get_by(Post, slug: Slugger.slugify_downcase(@ifttt_attrs.title))
+  end
 end

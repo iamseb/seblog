@@ -14,7 +14,7 @@ defmodule Seblog.Post do
     timestamps
   end
 
-  @required_fields ~w(title slug status content excerpt)
+  @required_fields ~w(title status content)
   @optional_fields ~w(pub_date)
 
   @doc """

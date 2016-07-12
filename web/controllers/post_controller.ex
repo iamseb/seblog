@@ -75,10 +75,8 @@ defmodule Seblog.PostController do
 
   def ifttt(conn, params = %{"key" => key, "post" => post}) do
     secret = Application.get_env(:seblog, Seblog.Endpoint)[:secret_key_base]
-    IO.inspect {key, secret}
     cond do
       secret == key -> 
-        IO.inspect params
         ifttt(conn, post)
       true -> 
         text(conn, "Bad Key")
@@ -94,7 +92,7 @@ defmodule Seblog.PostController do
       %Post{}, 
       %{"title" => title, "content" => content, "status" => "draft"}
     )
-    Repo.insert!(Post, changeset)
+    Repo.insert!(changeset)
     text(conn, "ok")
   end
 
