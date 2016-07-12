@@ -30,7 +30,7 @@ defmodule Seblog.Post do
     |> cast(params, @required_fields, @optional_fields)
   end
 
-  def make_exceprt(text) do
+  def make_excerpt(changeset) do
     excerpt = Map.get(changeset.changes, "content")
     |> String.split("<!-- break -->", trim: true) 
     |> Enum.at(0)
