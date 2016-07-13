@@ -19,7 +19,8 @@ defmodule Seblog.PostController do
     changeset = Post.changeset(%Post{}, post_params)
 
     case Repo.insert(changeset) do
-      {:ok, _post} ->
+      {:ok, post} ->
+        purge_cache(post, conn)
         conn
         |> put_flash(:info, "Post created successfully.")
         |> redirect(to: post_path(conn, :index))
@@ -52,6 +53,7 @@ defmodule Seblog.PostController do
 
     case Repo.update(changeset) do
       {:ok, post} ->
+        purge_cache(post, conn)
         conn
         |> put_flash(:info, "Post updated successfully.")
         |> redirect(to: post_path(conn, :show, post))
@@ -66,6 +68,7 @@ defmodule Seblog.PostController do
     # Here we use delete! (with a bang) because we expect
     # it to always work (and if it does not, it will raise).
     Repo.delete!(post)
+    purge_cache(post, conn)
 
     conn
     |> put_flash(:info, "Post deleted successfully.")
@@ -73,7 +76,7 @@ defmodule Seblog.PostController do
   end
 
 
-  def ifttt(conn, params = %{"key" => key, "post" => post}) do
+  def ifttt(conn, _params = %{"key" => key, "post" => post}) do
     secret = Application.get_env(:seblog, Seblog.Endpoint)[:secret_key_base]
     cond do
       secret == key -> 
@@ -92,7 +95,7 @@ defmodule Seblog.PostController do
       %Post{}, 
       %{"title" => title, "content" => content, "status" => "draft"}
     )
-    Repo.insert!(changeset)
+    Repo.insert!(changeset) |> purge_cache(conn)
     text(conn, "ok")
   end
 
@@ -101,6 +104,41 @@ defmodule Seblog.PostController do
     text(conn, "Bad Request")
   end
 
+  @api_user Application.get_env(:seblog, Seblog.Endpoint)[:cloudflare_api_user]
+  @api_key Application.get_env(:seblog, Seblog.Endpoint)[:cloudflare_api_key]
+
+  def purge_cache(post, conn) do
+    case Mix.prod do
+      :test -> 
+        
+        cf_headers = %{"X-Auth-Email" => @api_user, "X-Auth-Key" => @api_key, "Content-Type" => "application/json"}
+        HTTPoison.start()
+        case HTTPoison.get("https://api.cloudflare.com/client/v4/zones?name=sebpotter.com&status=active", cf_headers) do
+          {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
+            body
+            |> Poison.Parser.parse!
+            |> Map.get("result")
+            |> Enum.each(fn(x) -> call_cache_url(conn, Map.get(x, "id"), post) end)
+            post
+          _ ->
+            post
+        end
+      _ ->
+        post
+    end
+  end
+
+  defp call_cache_url(conn, zone_id, post) do
+    cf_headers = %{"X-Auth-Email" => @api_user, "X-Auth-Key" => @api_key, "Content-Type" => "application/json"}
+    HTTPoison.start()
+    data = %{files: [page_url(conn, :index), page_url(conn, :show, post.pub_date.year, post.pub_date.month, post.slug)]} |> Poison.encode!
+    IO.inspect HTTPoison.request(
+      :delete,
+      "https://api.cloudflare.com/client/v4/zones/#{zone_id}/purge_cache", 
+      data, 
+      cf_headers
+    )
+  end
 
 end
 
