@@ -89,7 +89,11 @@ defmodule Seblog.PostController do
 
   def ifttt(conn, _post = %{"url" => url, "title" => title, "content" => content, "image" => image}) do
     read_more = "\n<p><a href=\"#{url}\">Read Article</a></p>"
-    img = "<img src=\"#{image}\" />\n"
+    img = cond do
+      image =~ "no_image_card" ->
+        ""
+      true -> "<img src=\"#{image}\" />\n"
+    end
     content = img <> content <> read_more
     changeset = Post.changeset(
       %Post{}, 
