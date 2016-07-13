@@ -1,3 +1,5 @@
+@import "fontello";
+
 // Here go any variables you want to overwrite
 $picnic-primary: #ED8A2E;
 // Now import picnic and a couple of plugins
@@ -7,91 +9,17 @@ $picnic-primary: #ED8A2E;
 html,
 body,
 main {
-    display: block;
     color: #222;
     background: #efefef;
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    z-index: 5
 }
-
-
-article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, section, summary { display: block }
 
 body {
   background: #efefef;
 }
 
-html {
-  opacity: 1;
-  transition: all .4s ease-in-out;
-  -webkit-transition: all .4s ease-in-out;
-}
-
-html.wf-inactive {
-    opacity: 1;
-}
-
-html.wf-loading {
-  opacity: 0;
-}
-
 h1, h2, h3 {
     font-weight: normal;
 }
-
-h2 {
-    font-size: 1.618em;
-}
-
-
-
-.flex>div {
-    padding: 20px
-}
-
-.content {
-    padding: 10px 20px 0 0;
-
-}
-
-.visual .flex {
-    margin-top: 0
-}
-
-.visual>.card p {
-    padding: 0;
-    margin: 0 0 1em
-}
-
-.visual label {
-    margin-right: 20px
-}
-
-.visual .tabs label {
-    margin-right: 0
-}
-
-.visual .love,
-.visual .name {
-    display: block;
-    text-align: center;
-    padding: 0;
-    font-weight: bold
-}
-
-.visual .card {
-    overflow: visible
-}
-
-
-@media all and (min-width: 100px) {
-    .sidebar {
-        font-size: 0.8em;
-    }
-}
-
 
 
 div.content.post img {
@@ -115,90 +43,6 @@ div.content.page iframe {
     height: auto !important;
 }
 
-nav {
-  transition:all .4s !important;
-  // background: rgba(48, 48, 48, 0.9);
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  // height: 3em;
-  color: #fff;
-}
-
-nav.transparent{
-  box-shadow:none;
-  // background: none;
-  transition:all .4s !important;
-  color: #222;
-  vertical-align: top;
-}
-
-nav h1 {
-    max-height: 0;
-    overflow: hidden;
-    color: transparent;
-    margin-top: 0;
-    margin-bottom: 0;
-    padding: 0 0.3em;
-    transition:all .4s !important;
-}
-
-nav.transparent h1 {
-    color: #222;
-    max-height: 200px;
-    overflow: visible;
-    transition:all .4s !important;
-}
-
-nav .brand, nav .menu, nav .burger {
-    top: 50%;
-    float: right;
-    position: relative;
-    transform: translateY(-50%);
-}
-
-nav a.brand {
-  color: $picnic-primary;
-}
-
-nav .brand {
-    float: left;
-    max-width: 50%;
-    padding: 0 0.6em;
-    white-space: nowrap;
-}
-
-nav.transparent a {
-    color: $picnic-primary;
-}
-
-nav .pseudo.button { color: #fff; }
-nav .pseudo.button:hover { background: $picnic-primary }
-
-nav.transparent .pseudo.button { color: #fff; }
-
-nav.transparent .pseudo.button:hover{background: $picnic-primary}
-
-nav div.brand-flex { 
-  background: rgba(16, 16, 16, 0.9); 
-  height: 3em; 
-  transition: all .4s !important
-}
-nav.transparent div.brand-flex { 
-  background: rgba(32,32,32,1); 
-  height: 3em; 
-  transition: all .4s !important
-}
-
-.burger {
-    display: none;
-}
-
-@media all and (max-width: 960px){
-  nav .menu{color:#333}
-}
-
 
 div.content.post {
   background: #fff;
@@ -215,18 +59,10 @@ main {
 }
 
 div.sidebar {
-  padding-top: 3em;
+  padding: 3em 2em;
+  font-size: 0.9em;
 }
 
-nav .show:checked ~ .burger {
-    color: transparent;
-    width: 100%;
-    border-radius: 0;
-    background: rgba(0, 0, 0, 0.2) !important;
-    transition: all .3s ease;
-}
-
-nav .show:checked ~ .menu .button { color: #222 !important; }
 
 div.pagination div:first-child {
   text-align: right;
