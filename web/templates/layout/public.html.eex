@@ -528,7 +528,7 @@ div.pagination div:first-child {
                 <%= render @view_module, @view_template, assigns %>
             </div>
         </main>
-        <noscript id="deferred-styles">
+        <!-- <noscript id="deferred-styles">
           <link rel="stylesheet" href="<%= static_path(@conn, "/css/public.css") %>">
         </noscript>
         <script>
@@ -543,7 +543,7 @@ div.pagination div:first-child {
               webkitRequestAnimationFrame || msRequestAnimationFrame;
           if (raf) raf(function() { window.setTimeout(loadDeferredStyles, 0); });
           else window.addEventListener('load', loadDeferredStyles);
-        </script>
+        </script> -->
         <%= render_existing view_module(@conn), "scripts.html", assigns %>
         <script>// Transparent nav handler
         var nav = document.querySelector('nav');
