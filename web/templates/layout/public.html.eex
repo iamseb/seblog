@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><%= assigns[:page_title] || "From the mind of Seb - sebpotter.com" %></title>
     <meta id="viewport" name="viewport" content ="width=device-width, initial-scale=1.0, overflow:hidden, user-scalable=no" />
-    <!-- <link rel="stylesheet" href="<%= static_path(@conn, "/css/public.css") %>"> -->
-    <style type="text/css">
+    <link rel="stylesheet" href="<%= static_path(@conn, "/css/public.css") %>">
+<%#     <style type="text/css">
         @charset "UTF-8";
 * {
   box-sizing: inherit; }
@@ -262,8 +262,6 @@ select {
   transform: translateY(-50%);
   transition: all 0.3s; }
 
-.row > * {
-  margin: 0.6em 0; }
 
 @media (min-width: 60em) {
     .row {
@@ -475,13 +473,13 @@ div.content.post {
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), transparent 0 0 0, transparent 0 0 0, transparent 0 0 0, transparent 0 0 0; }
 
 
-    </style>
+    </style> %>
     </head>
 
     <body>
         <nav class="loading">
             <h1>Seb Potter</h1>
-            <div class="brand-row">
+            <div class="brand-flex">
                 <a href="/" class="brand"><span>From the mind of Seb</span></a>
                 <!-- responsiveness-->
                 <input id="bmenu" type="checkbox" class="show">
@@ -493,39 +491,37 @@ div.content.post {
             </div>
         </nav>            
         <br clear="all"/>
-    <main>
+        <main>
+            <div class="flex one three-800">
+                <%= render @view_module, @view_template, assigns %>
+            </div>
+        </main>
+        <%= render_existing view_module(@conn), "scripts.html", assigns %>
+        <script>// Transparent nav handler
+        var nav = document.querySelector('nav');
+        function navScroll(){
+          var className = 'transparent';
+          var top = window.scrollY ? window.scrollY : document.documentElement.scrollTop;
+          if (top > 0) {
+            nav.classList.remove(className);
+          } else {
+            nav.classList.add('transparent');
+            nav.classList.add(className);
+          }
+        };
+        window.onscroll = navScroll;
+        navScroll();
+        setTimeout(function(){ nav.classList.remove('loading'); }, 10);
+        </script>
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-        <div class="visual row">
-            <%= render @view_module, @view_template, assigns %>
-        </div>
+          ga('create', 'UA-7847008-2', 'auto');
+          ga('send', 'pageview');
 
-    </main>
-    <%= render_existing view_module(@conn), "scripts.html", assigns %>
-    <script>// Transparent nav handler
-var nav = document.querySelector('nav');
-function navScroll(){
-  var className = 'transparent';
-  var top = window.scrollY ? window.scrollY : document.documentElement.scrollTop;
-  if (top > 0) {
-    nav.classList.remove(className);
-  } else {
-    nav.classList.add('transparent');
-    nav.classList.add(className);
-  }
-};
-window.onscroll = navScroll;
-navScroll();
-setTimeout(function(){ nav.classList.remove('loading'); }, 10);
-</script>
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-7847008-2', 'auto');
-  ga('send', 'pageview');
-
-</script>
+        </script>
     </body>
 </html>

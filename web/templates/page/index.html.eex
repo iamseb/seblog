@@ -1,11 +1,10 @@
-<div class="content">
-    <br>
+<div class="full two-third-800">
     <%= for post <- @posts do %>
-    <div class="row">
-        <div class="content post format-<%= post.format %>">
-            <h2><a href="<%= page_path(@conn, :show, post.pub_date.year, post.pub_date.month, post.slug) %>"><%= raw post.title %></a></h2>
-            <p><%= raw post.excerpt %></p>
-        </div>
+    <br>
+    <div class="content post format-<%= post.format %>">
+        <h2><a href="<%= page_path(@conn, :show, post.pub_date.year, post.pub_date.month, post.slug) %>"><%= raw post.title %></a></h2>
+        <p><%= raw post.excerpt %></p>
+
     </div>
     <% end %>
     <div class="pagination">
@@ -13,9 +12,9 @@
             <%= if @page == 0 do %>Newer<% end %>
             <%= if @page < @total_pages do %><a href="<%= page_path(@conn, :by_page, @page+1) %>">Older</a><% end %>
             <%= if @page == @total_pages do %>Older<% end %>
-        </div>
+    </div>
 </div>
-<div class="content sidebar">
+<div class="sidebar">
     <div>
         <h2>Seb Potter</h2>
         <%= markdown("sebpotter-intro") %>

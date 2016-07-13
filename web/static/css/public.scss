@@ -46,24 +46,17 @@ h2 {
 }
 
 
-.visual {
-    text-align: left;
-    width: 100%;
-    max-width: 960px;
-    margin: 80px auto;
-}
 
-.visual>div {
+.flex>div {
     padding: 20px
 }
 
-.visual .content {
+.content {
     padding: 10px 20px 0 0;
-    min-width: 65%;
 
 }
 
-.visual .row {
+.visual .flex {
     margin-top: 0
 }
 
@@ -92,38 +85,21 @@ h2 {
     overflow: visible
 }
 
-@media all and (max-width: 960px) {
-    .visual {
-        padding: 20px;
-        margin: 0 auto
-    }
-    .visual .content {
-        margin-bottom: 20px
-    }
-}
 
-@media all and (min-width: 960px) {
+@media all and (min-width: 100px) {
     .sidebar {
-        width: 38%;
         font-size: 0.8em;
     }
 }
 
 
-div.grid {
-    display: flex;
-}
 
-div.grid div {
-    flex: auto;
-}
-
-div.content .post img {
+div.content.post img {
     width: 100% !important;
     height: auto !important;
 }
 
-div.content .post iframe {
+div.content.post iframe {
     width: 100% !important;
     height: auto !important;
 }
@@ -161,7 +137,6 @@ nav.transparent h1 {
     color: #222;
     max-height: 200px;
     overflow: visible;
-    margin-bottom: 0.3em;
     transition:all .4s !important;
 }
 
@@ -170,6 +145,10 @@ nav .brand, nav .menu, nav .burger {
     float: right;
     position: relative;
     transform: translateY(-50%);
+}
+
+nav a.brand {
+  color: $picnic-primary;
 }
 
 nav .brand {
@@ -184,18 +163,18 @@ nav.transparent a {
 }
 
 nav .pseudo.button { color: #fff; }
-nav .pseudo.button:hover { background: rgba(255,255,255,0.6) }
+nav .pseudo.button:hover { background: $picnic-primary }
 
 nav.transparent .pseudo.button { color: #fff; }
 
-nav.transparent .pseudo.button:hover{background:rgba(255,255,255,0.2)}
+nav.transparent .pseudo.button:hover{background: $picnic-primary}
 
-nav div.brand-row { 
+nav div.brand-flex { 
   background: rgba(16, 16, 16, 0.9); 
   height: 3em; 
   transition: all .4s !important
 }
-nav.transparent div.brand-row { 
+nav.transparent div.brand-flex { 
   background: rgba(32,32,32,1); 
   height: 3em; 
   transition: all .4s !important
@@ -216,4 +195,24 @@ div.content.post {
   padding: 1em;
   padding-top: 0;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2),transparent 0 0 0,transparent 0 0 0,transparent 0 0 0,transparent 0 0 0;
+  margin-bottom: 2em;
 }
+
+main {
+  margin-top: 3em;
+  padding-left: 2em;
+}
+
+div.sidebar {
+  padding-top: 3em;
+}
+
+nav .show:checked ~ .burger {
+    color: transparent;
+    width: 100%;
+    border-radius: 0;
+    background: rgba(0, 0, 0, 0.2) !important;
+    transition: all .3s ease;
+}
+
+nav .show:checked ~ .menu .button { color: #222 !important; }
