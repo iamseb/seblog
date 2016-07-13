@@ -7,11 +7,15 @@
 
     </div>
     <% end %>
-    <div class="pagination">
+    <div class="pagination flex two">
+        <div>
             <%= if @page > 0 do %><a href="<%= page_path(@conn, :by_page, @page-1) %>">Newer</a><% end %>
             <%= if @page == 0 do %>Newer<% end %>
+        </div>
+        <div>
             <%= if @page < @total_pages do %><a href="<%= page_path(@conn, :by_page, @page+1) %>">Older</a><% end %>
             <%= if @page == @total_pages do %>Older<% end %>
+        </div>
     </div>
 </div>
 <div class="sidebar">
