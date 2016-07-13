@@ -11,11 +11,13 @@
     <%= error_tag f, :title %>
   </div>
 
+<!--
   <div class="form-group">
     <%= label f, :slug, class: "control-label" %>
     <%= text_input f, :slug, class: "form-control" %>
     <%= error_tag f, :slug %>
   </div>
+-->
 
   <div class="form-group">
     <%= label f, :status, class: "control-label" %>
@@ -35,11 +37,13 @@
     <%= error_tag f, :content %>
   </div>
 
+<!--
   <div class="form-group">
     <%= label f, :excerpt, class: "control-label" %>
     <%= textarea f, :excerpt, class: "form-control" %>
     <%= error_tag f, :excerpt %>
   </div>
+-->
 
   <div class="form-group">
     <%= label f, :pub_date, class: "control-label" %>

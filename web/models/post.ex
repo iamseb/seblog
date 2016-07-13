@@ -31,7 +31,7 @@ defmodule Seblog.Post do
   end
 
   def make_excerpt(changeset) do
-    excerpt = get_change(changeset, :content)
+    excerpt = get_field(changeset, :content)
     excerpt = cond do
       excerpt != nil ->
         excerpt
@@ -45,7 +45,7 @@ defmodule Seblog.Post do
   end
 
   def slugify(changeset) do
-    slug = get_change(changeset, :title)
+    slug = get_field(changeset, :title)
     |> Slugger.slugify_downcase
     
     put_change(changeset, :slug, slug)
