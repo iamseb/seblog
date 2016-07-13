@@ -82,4 +82,4 @@ config :guardian, Guardian,
   ttl: { 30, :days},
   verify_issuer: true,
   secret_key: System.get_env("SECRET_KEY_BASE"),
-  serializer: Xempathai.GuardianSerializer
+  serializer: Seblog.GuardianSerializer
