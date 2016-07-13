@@ -316,8 +316,8 @@ body {
 
 html {
   opacity: 1;
-  transition: all .4s ease-in-out;
-  -webkit-transition: all .4s ease-in-out; }
+  transition: all .4s ease;
+  -webkit-transition: all .4s ease; }
 
 html.wf-inactive {
   opacity: 1; }
@@ -394,7 +394,7 @@ div.content .post iframe {
   height: auto !important; }
 
 nav {
-  transition: all .4s !important;
+  transition: all .4s ease !important;
   position: fixed;
   top: 0;
   left: 0;
@@ -403,7 +403,7 @@ nav {
 
 nav.transparent {
   box-shadow: none;
-  transition: all .4s !important;
+  transition: all .4s ease !important;
   color: #222;
   vertical-align: top; }
 
@@ -414,14 +414,14 @@ nav h1 {
   margin-top: 0;
   margin-bottom: 0;
   padding: 0 0.3em;
-  transition: all .4s !important; }
+  transition: all .4s ease !important; }
 
 nav.transparent h1 {
   color: #222;
   max-height: 200px;
   overflow: visible;
   margin-bottom: 0.3em;
-  transition: all .4s !important; }
+  transition: all .4s ease !important; }
 
 nav .brand, nav .menu, nav .burger {
   top: 50%;
@@ -453,12 +453,12 @@ nav.transparent .pseudo.button:hover {
 nav div.brand-row {
   background: rgba(16, 16, 16, 0.9);
   height: 3em;
-  transition: all .4s !important; }
+  transition: all .4s ease !important; }
 
 nav.transparent div.brand-row {
   background: #202020;
   height: 3em;
-  transition: all .4s !important; }
+  transition: all .4s ease !important; }
 
 .burger {
   display: none; }
