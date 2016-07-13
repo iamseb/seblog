@@ -13,14 +13,14 @@ defmodule Seblog.PageController do
     limit = 10
     page = String.to_integer(page)
     offset = limit * page
-    posts = Repo.all(from post in Post, limit: 10, offset: ^offset, order_by: [desc: post.pub_date])
+    posts = Repo.all(from post in Post, where: post.status == "publish", limit: 10, offset: ^offset, order_by: [desc: post.pub_date])
     count = Repo.aggregate(Post, :count, :id)
     total_pages = Float.floor(count / limit)
     render conn, "index.html", posts: posts, page: page, total_pages: total_pages
   end
 
   def show(conn, %{"slug" => slug}) do
-    post = Repo.get_by!(Post, slug: slug)
+    post = Repo.get_by!(Post, slug: slug, status: "publish")
     render(conn, "show.html", post: post)
   end
   
