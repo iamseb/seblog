@@ -108,8 +108,8 @@ defmodule Seblog.PostController do
   @api_key Application.get_env(:seblog, Seblog.Endpoint)[:cloudflare_api_key]
 
   def purge_cache(post, conn) do
-    case Mix.prod do
-      :test -> 
+    case Mix.env do
+      :prod -> 
         
         cf_headers = %{"X-Auth-Email" => @api_user, "X-Auth-Key" => @api_key, "Content-Type" => "application/json"}
         HTTPoison.start()
