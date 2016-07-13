@@ -6,7 +6,7 @@ defmodule Seblog.PostController do
   plug :scrub_params, "post" when action in [:create, :update]
 
   def index(conn, _params) do
-    posts = Repo.all(Post)
+    posts = Repo.all(from post in Post, order_by: [desc: post.pub_date])
     render(conn, "index.html", posts: posts)
   end
 
