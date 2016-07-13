@@ -8,16 +8,9 @@
     <meta id="viewport" name="viewport" content ="width=device-width, initial-scale=1.0, overflow:hidden, user-scalable=no" />
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
     <style>
-      .flexbox-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-      }
 
       body {
           max-width: 900px;
-          margin: 40px auto;
           font: 18px/1.4 'Open Sans', sans-serif;
           color: #555;
           background-color: #eee;
@@ -30,13 +23,17 @@
           text-decoration: none;
       }
 
+      .excerpt img, .excerpt iframe {
+        display: none;
+      }
+
       section {
           margin-top: 60px;
       }
 
       textarea {
-          width: 800px;
-          height: 400px;
+          width: 80%;
+          height: 32em;
           padding: 20px;
           color: #555;
           font: 18px/25px 'Roboto Mono', sans-serif;
@@ -65,15 +62,14 @@
         <%= render "sign_in_sign_out.html", conn: @conn %><br><br>
       </ul>
     </nav>
-  </header>
+    </header>
   
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
       <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
 
-  </div>
-
         <%= render @view_module, @view_template, assigns %>
 
+    </div>
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
     <%= render_existing view_module(@conn), "scripts.html", assigns %>
     </body>
