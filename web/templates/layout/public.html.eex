@@ -12,7 +12,7 @@
     <body>
     <nav class="demo">
       <%# <h1>Seb Potter</h1> %>
-      <a href="#" class="brand">
+      <a href="/" class="brand">
         <%# <img class="logo" src="/web/img/basket.png" /> %>
         <span>From the mind of Seb</span>
       </a>
