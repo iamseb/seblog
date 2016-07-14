@@ -23,18 +23,21 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
-# Import environment specific config. This must remain at the bottom
-# of this file so it overrides the configuration defined above.
-import_config "#{Mix.env}.exs"
-
-# Configure phoenix generators
-config :phoenix, :generators,
-  migration: true,
-  binary_id: true
 
 config :seblog, Seblog.CachedImage,
   cache_base: "web/static/assets/img_cache",
   cache_widths: [tiny: 30, small: 200, medium: 400, large: 800, full: 1600]
 
 config :arc,
-  asset_host: "http://localhost:6777"
+  asset_host: "https://images.sebpotter.com"
+
+# Import environment specific config. This must remain at the bottom
+# of this file so it overrides the configuration defined above.
+import_config "#{Mix.env}.exs"
+
+
+# Configure phoenix generators
+config :phoenix, :generators,
+  migration: true,
+  binary_id: true
+
