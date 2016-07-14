@@ -7,7 +7,7 @@ defmodule Seblog.CachedImage do
   @versions [:original] #, :thumb]
 
   def __storage do
-    case Mix.Env do
+    case Mix.env do
       :prod -> Arc.Storage.S3
       _ -> Arc.Storage.Local
     end
