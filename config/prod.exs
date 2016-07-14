@@ -86,13 +86,13 @@ config :guardian, Guardian,
 
 
 config :arc,
-  bucket: "images.sebpotter.com",
-  virtual_host: true
+  bucket: "images.sebpotter.com"
 
 config :ex_aws,
   region: "eu-west-1",
+  virtual_host: false,
   s3: [
-    scheme: "https://",
+    scheme: "http://",
     host: "s3.eu-west-1.amazonaws.com",
     region: "eu-west-1"
   ]
