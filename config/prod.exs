@@ -86,7 +86,8 @@ config :guardian, Guardian,
 
 
 config :arc,
-  bucket: "images.sebpotter.com"
+  bucket: "images.sebpotter.com",
+  virtual_host: true
 
 config :ex_aws,
   region: "eu-west-1",
