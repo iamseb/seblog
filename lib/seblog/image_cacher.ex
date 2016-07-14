@@ -12,11 +12,11 @@ defmodule Seblog.ImageCacher do
     def get_remote_image(url) do
         uuid = Ecto.UUID.generate()
         %HTTPoison.Response{body: body} = HTTPoison.get!(url)
-        ext = url |> Path.extname |> String.split("?") |> hd |> String.split(".") |> hd
+        ext = url |> Path.extname |> String.split("?") |> hd
         path = Plug.Upload.random_file!("image")
         File.write!(path, body)
-        mime = Plug.MIME.type(ext)
-        %Plug.Upload{content_type: mime, filename: "#{uuid}.#{ext}", path: path}
+        mime = Plug.MIME.path(ext)
+        %Plug.Upload{content_type: mime, filename: "#{uuid}#{ext}", path: path}
     end
 
     def store_image(upload) do
