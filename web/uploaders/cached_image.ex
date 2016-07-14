@@ -6,12 +6,12 @@ defmodule Seblog.CachedImage do
 
   @versions [:original] #, :thumb]
 
-  def __storage do
-    case Mix.env do
-      :prod -> Arc.Storage.S3
-      _ -> Arc.Storage.Local
-    end
-  end
+  # def __storage do
+  #   case Mix.env do
+  #     :prod -> Arc.Storage.S3
+  #     _ -> Arc.Storage.Local
+  #   end
+  # end
 
   def filename(version,  {file, _scope}) do
     "#{version}-#{file.file_name}"
