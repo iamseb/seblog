@@ -59,6 +59,7 @@ defmodule Seblog.PostControllerTest do
 
   test "deletes chosen resource", %{conn: conn} do
     post = Repo.insert! %Post{}
+    _ = put conn, post_path(conn, :update, post), post: @valid_attrs
     conn = delete conn, post_path(conn, :delete, post)
     assert redirected_to(conn) == post_path(conn, :index)
     refute Repo.get(Post, post.id)

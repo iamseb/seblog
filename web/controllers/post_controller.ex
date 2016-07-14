@@ -5,6 +5,18 @@ defmodule Seblog.PostController do
 
   plug :scrub_params, "post" when action in [:create, :update]
 
+  defp make_cache_urls(conn, post) do
+    cond do
+      post == nil ->
+        [page_url(conn, :index)]
+      true ->
+        [
+          page_url(conn, :index), 
+          page_url(conn, :show, post.pub_date.year, post.pub_date.month, post.slug)
+        ]
+      end
+  end
+
   def index(conn, _params) do
     posts = Repo.all(from post in Post, order_by: [desc: post.pub_date])
     render(conn, "index.html", posts: posts)
@@ -20,7 +32,7 @@ defmodule Seblog.PostController do
 
     case Repo.insert(changeset) do
       {:ok, post} ->
-        purge_cache(post, conn)
+        Seblog.Cloudflare.purge_cache(make_cache_urls(conn, post))
         conn
         |> put_flash(:info, "Post created successfully.")
         |> redirect(to: post_path(conn, :index))
@@ -53,7 +65,7 @@ defmodule Seblog.PostController do
 
     case Repo.update(changeset) do
       {:ok, post} ->
-        purge_cache(post, conn)
+        Seblog.Cloudflare.purge_cache(make_cache_urls(conn, post))
         conn
         |> put_flash(:info, "Post updated successfully.")
         |> redirect(to: post_path(conn, :show, post))
@@ -67,8 +79,8 @@ defmodule Seblog.PostController do
 
     # Here we use delete! (with a bang) because we expect
     # it to always work (and if it does not, it will raise).
-    Repo.delete!(post)
-    purge_cache(post, conn)
+    post = Repo.delete!(post)
+    Seblog.Cloudflare.purge_cache(make_cache_urls(conn, post))
 
     conn
     |> put_flash(:info, "Post deleted successfully.")
@@ -99,7 +111,8 @@ defmodule Seblog.PostController do
       %Post{}, 
       %{"title" => title, "content" => content, "status" => "draft"}
     )
-    Repo.insert!(changeset) |> purge_cache(conn)
+    post = Repo.insert!(changeset)
+    Seblog.Cloudflare.purge_cache(make_cache_urls(conn, post))
     text(conn, "ok")
   end
 
@@ -108,41 +121,6 @@ defmodule Seblog.PostController do
     text(conn, "Bad Request")
   end
 
-  @api_user Application.get_env(:seblog, Seblog.Endpoint)[:cloudflare_api_user]
-  @api_key Application.get_env(:seblog, Seblog.Endpoint)[:cloudflare_api_key]
-
-  def purge_cache(post, conn) do
-    case Mix.env do
-      :prod -> 
-        
-        cf_headers = %{"X-Auth-Email" => @api_user, "X-Auth-Key" => @api_key, "Content-Type" => "application/json"}
-        HTTPoison.start()
-        case HTTPoison.get("https://api.cloudflare.com/client/v4/zones?name=sebpotter.com&status=active", cf_headers) do
-          {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
-            body
-            |> Poison.Parser.parse!
-            |> Map.get("result")
-            |> Enum.each(fn(x) -> call_cache_url(conn, Map.get(x, "id"), post) end)
-            post
-          _ ->
-            post
-        end
-      _ ->
-        post
-    end
-  end
-
-  defp call_cache_url(conn, zone_id, post) do
-    cf_headers = %{"X-Auth-Email" => @api_user, "X-Auth-Key" => @api_key, "Content-Type" => "application/json"}
-    HTTPoison.start()
-    data = %{files: [page_url(conn, :index), page_url(conn, :show, post.pub_date.year, post.pub_date.month, post.slug)]} |> Poison.encode!
-    IO.inspect HTTPoison.request(
-      :delete,
-      "https://api.cloudflare.com/client/v4/zones/#{zone_id}/purge_cache", 
-      data, 
-      cf_headers
-    )
-  end
 
 end
 
