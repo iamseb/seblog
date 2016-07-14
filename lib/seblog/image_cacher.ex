@@ -3,6 +3,8 @@ defmodule Seblog.ImageCacher do
     alias Seblog.CachedImage
 
     def cache_remote_image(url) do
+
+        IO.puts "Getting image: " <> url
         url
         |> get_remote_image
         |> store_image
@@ -16,7 +18,10 @@ defmodule Seblog.ImageCacher do
         path = Plug.Upload.random_file!("image")
         File.write!(path, body)
         mime = Plug.MIME.path(ext)
-        %Plug.Upload{content_type: mime, filename: "#{uuid}#{ext}", path: path}
+        upload = %Plug.Upload{content_type: mime, filename: "#{uuid}#{ext}", path: path}
+        IO.puts "Generated upload: "
+        IO.inspect upload
+        upload
     end
 
     def store_image(upload) do
