@@ -83,3 +83,7 @@ config :guardian, Guardian,
   verify_issuer: true,
   secret_key: System.get_env("SECRET_KEY_BASE"),
   serializer: Seblog.GuardianSerializer
+
+
+config :arc,
+  bucket: "images.sebpotter.com"

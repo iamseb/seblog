@@ -34,7 +34,6 @@ defmodule Seblog.Seeds do
     defp get_full_content(post) do
 
         uri = Map.get(post, "url") <> "?json=1"
-        HTTPoison.start()
         case HTTPoison.get(uri) do
             {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
                 body

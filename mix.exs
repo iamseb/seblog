@@ -19,7 +19,7 @@ defmodule Seblog.Mixfile do
   def application do
     [mod: {Seblog, []},
      applications: [:phoenix, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex]]
+                    :phoenix_ecto, :postgrex, :ex_aws, :httpoison]]
   end
 
   # Specifies which paths to compile per environment.
@@ -42,7 +42,9 @@ defmodule Seblog.Mixfile do
      {:comeonin, "~> 2.5"},
      {:guardian, "~> 0.12.0"},
      {:earmark, "~> 1.0.0"},
-     {:slugger, git: "https://github.com/h4cc/slugger"}
+     {:slugger, git: "https://github.com/h4cc/slugger"},
+     {:arc, "~> 0.5.2"},
+     {:ex_aws, "~> 0.4.10"}, # Required if using Amazon S3
     ]
 
   end

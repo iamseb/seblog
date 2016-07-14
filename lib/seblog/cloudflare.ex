@@ -7,7 +7,6 @@ defmodule Seblog.Cloudflare do
       :prod -> 
         
         cf_headers = %{"X-Auth-Email" => @api_user, "X-Auth-Key" => @api_key, "Content-Type" => "application/json"}
-        HTTPoison.start()
         case HTTPoison.get("https://api.cloudflare.com/client/v4/zones?name=sebpotter.com&status=active", cf_headers) do
           {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
             body
@@ -25,7 +24,6 @@ defmodule Seblog.Cloudflare do
 
   defp call_cache_url(zone_id, files) do
     cf_headers = %{"X-Auth-Email" => @api_user, "X-Auth-Key" => @api_key, "Content-Type" => "application/json"}
-    HTTPoison.start()
     data = %{files: files} |> Poison.encode!
     IO.inspect HTTPoison.request(
       :delete,

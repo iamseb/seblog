@@ -31,3 +31,10 @@ import_config "#{Mix.env}.exs"
 config :phoenix, :generators,
   migration: true,
   binary_id: true
+
+config :seblog, Seblog.CachedImage,
+  cache_base: "web/static/assets/img_cache",
+  cache_widths: [tiny: 30, small: 200, medium: 400, large: 800, full: 1600]
+
+config :arc,
+  asset_host: "http://localhost:6777"
