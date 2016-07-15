@@ -18,7 +18,7 @@ defmodule Seblog.CachedImage do
   # end
 
   # To add a thumbnail version:
-  # @versions [:original, :thumb]
+  @versions [:original, :thumb]
 
   # Whitelist file extensions:
   # def validate({file, _}) do
@@ -26,9 +26,9 @@ defmodule Seblog.CachedImage do
   # end
 
   # Define a thumbnail transformation:
-  # def transform(:thumb, _) do
-  #   {:convert, "-strip -thumbnail 250x250^ -gravity center -extent 250x250 -format png", :png}
-  # end
+  def transform(:thumb, _) do
+    {:convert, "-strip -thumbnail 100x100^ -gravity center -extent 100x100 -format png", :png}
+  end
 
   # Override the persisted filenames:
   # def filename(version, _) do
