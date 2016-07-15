@@ -4,8 +4,15 @@ defmodule Seblog.Repo.Migrations.S3UploadImages do
     alias Seblog.CachedImage
     alias Seblog.Repo
 
+
+    def ensure_all_deps_started() do
+        Application.load(:seblog)
+        Enum.map(Application.spec(:seblog, :applications), &Application.load(&1))
+        Enum.map(Application.spec(:seblog, :applications), &Application.ensure_all_started(&1))
+      end
+
     def change do
-        HTTPoison.start()
+        ensure_all_deps_started
         Repo.all(Post)
         |> Enum.each(fn(post) -> update_post(post) end)
     end
