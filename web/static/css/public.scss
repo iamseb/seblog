@@ -25,8 +25,6 @@ h1, h2, h3 {
 div.content.post img {
     width: 100% !important;
     height: auto !important;
-    opacity: 1;
-    transition: all 2s;
 }
 
 div.progressive-container {
@@ -38,6 +36,9 @@ div.progressive-container {
 }
 
 div.progressive-container img {
+  -webkit-filter:blur(4px) grayscale(70%);
+  -ms-filter:blur(4px) grayscale(70%);
+  filter:blur(4px) grayscale(70%);
   margin: 0;
   display: block;
 }
