@@ -13,9 +13,9 @@ defmodule Seblog.CachedImage do
   #   end
   # end
 
-  def filename(version,  {file, _scope}) do
-    "#{version}-#{file.file_name}"
-  end
+  # def filename(version,  {file, _scope}) do
+  #   "#{version}-#{file.file_name}"
+  # end
 
   # To add a thumbnail version:
   # @versions [:original, :thumb]
@@ -57,7 +57,6 @@ defmodule Seblog.CachedImage do
 
 
   def cache_remote_image(url) do
-
       IO.puts "Getting image: " <> url
       url
       |> get_remote_image
@@ -69,10 +68,10 @@ defmodule Seblog.CachedImage do
       uuid = Ecto.UUID.generate()
       %HTTPoison.Response{headers: headers, body: body} = HTTPoison.get!(url, [], [follow_redirect: true])
       content_type = get_header(headers, "Content-Type")
-      ext = url |> Path.extname |> String.split("?") |> hd
+      ext = Plug.MIME.extensions(content_type) |> hd
       path = Plug.Upload.random_file!("image")
       File.write!(path, body)
-      upload = %Plug.Upload{content_type: content_type, filename: "#{uuid}", path: path}
+      upload = %Plug.Upload{content_type: content_type, filename: "#{uuid}#{ext}", path: path}
       IO.puts "Generated upload: "
       IO.inspect upload
       upload

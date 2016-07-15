@@ -107,7 +107,7 @@ defmodule Seblog.PostController do
         ""
       true -> 
         new_image = CachedImage.cache_remote_image(image)
-        "<img src=\"#{new_image}\" data-original=\"#{new_image}\"/>\n"
+        "<img src=\"#{new_image}\" data-original=\"#{image}\"/>\n"
     end
     content = img <> content <> read_more
     changeset = Post.changeset(
