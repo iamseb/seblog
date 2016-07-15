@@ -67,12 +67,11 @@ defmodule Seblog.CachedImage do
 
   def get_remote_image(url) do
       uuid = Ecto.UUID.generate()
-      %HTTPoison.Response{body: body} = HTTPoison.get!(url, [], [follow_redirect: true])
+      %HTTPoison.Response{headers: [{"Content-Type", content_type}], body: body} = HTTPoison.get!(url, [], [follow_redirect: true])
       ext = url |> Path.extname |> String.split("?") |> hd
       path = Plug.Upload.random_file!("image")
       File.write!(path, body)
-      mime = Plug.MIME.path(ext)
-      upload = %Plug.Upload{content_type: mime, filename: "#{uuid}#{ext}", path: path}
+      upload = %Plug.Upload{content_type: content_type, filename: "#{uuid}", path: path}
       IO.puts "Generated upload: "
       IO.inspect upload
       upload
