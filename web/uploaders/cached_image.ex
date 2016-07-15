@@ -39,7 +39,7 @@ defmodule Seblog.CachedImage do
   def storage_dir(_version, {_file, _scope}) do
     base = Application.get_env(:seblog, Seblog.CachedImage)[:cache_base]
     "#{base}"
-  end
+end
 
   # Provide a default URL if there hasn't been a file uploaded
   # def default_url(version, scope) do
@@ -53,45 +53,67 @@ defmodule Seblog.CachedImage do
   #
   def s3_object_headers(_version, {file, _scope}) do
     [content_type: Plug.MIME.path(file.file_name)]
-  end
+end
 
 
-  def cache_remote_image(url) do
-      IO.puts "Getting image: " <> url
-      url
-      |> get_remote_image
-      |> store_image
-      |> get_cached_image_url
-  end
+def cache_remote_image(url) do
+    IO.puts "Getting image: " <> url
+    asset_host = Application.get_env(:arc, :asset_host)
+    cond do
+        url =~ asset_host -> url
+        true ->
+            url
+            |> get_remote_image
+            |> store_image
+            |> get_cached_image_url
+    end
+end
 
-  def get_remote_image(url) do
-      uuid = Ecto.UUID.generate()
-      %HTTPoison.Response{headers: headers, body: body} = HTTPoison.get!(url, [], [follow_redirect: true])
-      content_type = get_header(headers, "Content-Type")
-      ext = Plug.MIME.extensions(content_type) |> hd
-      path = Plug.Upload.random_file!("image")
-      File.write!(path, body)
-      upload = %Plug.Upload{content_type: content_type, filename: "#{uuid}.#{ext}", path: path}
-      IO.puts "Generated upload: "
-      IO.inspect upload
-      upload
-  end
+def get_remote_image(url) do
+    url = cond do
+      String.starts_with?(url, "//") -> "https:" <> url
+      true -> url
+    end
+    uuid = Ecto.UUID.generate()
+    %HTTPoison.Response{headers: headers, body: body} = HTTPoison.get!(url, [], [follow_redirect: true])
+    content_type = get_header(headers, "Content-Type")
+    ext = Plug.MIME.extensions(content_type || "image/jpeg") |> hd
+    path = Plug.Upload.random_file!("image")
+    File.write!(path, body)
+    upload = %Plug.Upload{content_type: content_type, filename: "#{uuid}.#{ext}", path: path}
+    IO.puts "Generated upload: "
+    IO.inspect upload
+    upload
+end
 
-  def store_image(upload) do
-      {:ok, filename} = store(upload)
-      filename
-  end
+def store_image(upload) do
+    {:ok, filename} = store(upload)
+    filename
+end
 
-  def get_cached_image_url(filename) do
-      url(filename)
-  end
+def get_cached_image_url(filename) do
+    url(filename)
+end
 
 
-  defp get_header(headers, key) do
+defp get_header(headers, key) do
     headers
     |> Enum.filter(fn({k, _}) -> k == key end)
     |> hd
     |> elem(1)
-  end
+end
+
+
+def replace_images(content) do
+    Regex.scan(
+      ~r/<img.*?src="(.*?)"/s, 
+      content, 
+      capture: :all_but_first
+      ) 
+    |> Enum.reduce([], fn (x, acc) -> acc ++ [x |> hd] end)
+    |> Enum.reduce([], fn (x, acc) -> acc ++ [[x, cache_remote_image(x)]] end)
+    |> Enum.reduce(content, fn(x, acc) -> String.replace(content, List.first(x), List.last(x)) end)
+end
+
 
 end
