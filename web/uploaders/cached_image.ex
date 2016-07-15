@@ -28,7 +28,7 @@ defmodule Seblog.CachedImage do
 
   # Define a thumbnail transformation:
   def transform(:thumb, _) do
-    {:convert, "-strip -thumbnail 100x100^ -gravity center -extent 100x100 -format png", :png}
+    {:convert, "-thumbnail 100 -format png", :png}
   end
 
   # Override the persisted filenames:
@@ -57,16 +57,16 @@ defmodule Seblog.CachedImage do
   end
 
 
-  def cache_remote_image(url) do
+  def cache_remote_image(url, force \\ :false) do
       IO.puts "Getting image: " <> url
       asset_host = Application.get_env(:arc, :asset_host)
       cond do
-          url =~ asset_host -> url
+          url =~ asset_host && !force -> url
           true ->
               url
               |> get_remote_image
               |> store_image
-              |> get_cached_image_url
+              |> get_cached_image_urls
       end
   end
 
@@ -92,8 +92,8 @@ defmodule Seblog.CachedImage do
       filename
   end
 
-  def get_cached_image_url(filename) do
-      url(filename)
+  def get_cached_image_urls(filename) do
+      %{:thumb => url(filename, :thumb), :original => url(filename)}
   end
 
 
@@ -105,15 +105,22 @@ defmodule Seblog.CachedImage do
   end
 
 
-  def replace_images(content) do
-      Regex.scan(
+  def replace_images(content, force \\ :false) do
+      content = String.replace(content, ~r/data-fullsize=".*?"/, "")
+      content = Regex.scan(
         ~r/<img.*?src="(.*?)"/s, 
         content, 
         capture: :all_but_first
         ) 
       |> Enum.reduce([], fn (x, acc) -> acc ++ [x |> hd] end)
-      |> Enum.reduce([], fn (x, acc) -> acc ++ [[x, cache_remote_image(x)]] end)
-      |> Enum.reduce(content, fn(x, acc) -> String.replace(content, List.first(x), List.last(x)) end)
+      |> Enum.reduce([], fn (x, acc) -> acc ++ [[x, cache_remote_image(x, force)]] end)
+      |> Enum.reduce(content, fn(x, acc) -> replace_image_strings(acc, x) end)
+
+  end
+
+  def replace_image_strings(content, urls) do
+      url_map = List.last(urls)
+      String.replace(content, List.first(urls), "#{url_map.thumb}\" data-fullsize=\"#{url_map.original}")
   end
 
 

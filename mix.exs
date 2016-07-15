@@ -45,6 +45,7 @@ defmodule Seblog.Mixfile do
      {:slugger, git: "https://github.com/h4cc/slugger"},
      {:arc, "~> 0.5.2"},
      {:ex_aws, "~> 0.4.10"}, # Required if using Amazon S3
+     {:mogrify, "~> 0.3.2"},
     ]
 
   end
