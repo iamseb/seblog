@@ -71,7 +71,7 @@ defmodule Seblog.CachedImage do
       ext = Plug.MIME.extensions(content_type) |> hd
       path = Plug.Upload.random_file!("image")
       File.write!(path, body)
-      upload = %Plug.Upload{content_type: content_type, filename: "#{uuid}#{ext}", path: path}
+      upload = %Plug.Upload{content_type: content_type, filename: "#{uuid}.#{ext}", path: path}
       IO.puts "Generated upload: "
       IO.inspect upload
       upload
