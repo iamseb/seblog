@@ -7,7 +7,7 @@ defmodule Seblog.Cloudflare do
       :prod -> 
         
         cf_headers = %{"X-Auth-Email" => @api_user, "X-Auth-Key" => @api_key, "Content-Type" => "application/json"}
-        case HTTPoison.get("https://api.cloudflare.com/client/v4/zones?name=sebpotter.com&status=active", cf_headers) do
+        case HTTPoison.get("https://api.cloudflare.com/client/v4/zones?name=sebpotter.com&status=active", cf_headers, [follow_redirect: true]) do
           {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
             body
             |> Poison.Parser.parse!

@@ -19,7 +19,7 @@ defmodule Seblog.Mixfile do
   def application do
     [mod: {Seblog, []},
      applications: [:phoenix, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex, :ex_aws, :httpoison]]
+                    :phoenix_ecto, :postgrex, :ex_aws, :httpoison, :arc]]
   end
 
   # Specifies which paths to compile per environment.

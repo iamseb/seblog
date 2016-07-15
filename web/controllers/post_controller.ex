@@ -2,7 +2,7 @@ defmodule Seblog.PostController do
   use Seblog.Web, :controller
 
   alias Seblog.Post
-  alias Seblog.ImageCacher
+  alias Seblog.CachedImage
 
   plug :scrub_params, "post" when action in [:create, :update]
 
@@ -106,7 +106,7 @@ defmodule Seblog.PostController do
       image =~ "no_image_card" ->
         ""
       true -> 
-        image = ImageCacher.cache_remote_image(image)
+        image = CachedImage.cache_remote_image(image)
         "<img src=\"#{image}\" />\n"
     end
     content = img <> content <> read_more

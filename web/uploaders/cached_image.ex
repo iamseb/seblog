@@ -51,7 +51,41 @@ defmodule Seblog.CachedImage do
   #    :content_encoding, :content_length, :content_type,
   #    :expect, :expires, :storage_class, :website_redirect_location]
   #
-  def s3_object_headers(version, {file, scope}) do
+  def s3_object_headers(_version, {file, _scope}) do
     [content_type: Plug.MIME.path(file.file_name)]
   end
+
+
+  def cache_remote_image(url) do
+
+      IO.puts "Getting image: " <> url
+      url
+      |> get_remote_image
+      |> store_image
+      |> get_cached_image_url
+  end
+
+  def get_remote_image(url) do
+      uuid = Ecto.UUID.generate()
+      %HTTPoison.Response{body: body} = HTTPoison.get!(url, [], [follow_redirect: true])
+      ext = url |> Path.extname |> String.split("?") |> hd
+      path = Plug.Upload.random_file!("image")
+      File.write!(path, body)
+      mime = Plug.MIME.path(ext)
+      upload = %Plug.Upload{content_type: mime, filename: "#{uuid}#{ext}", path: path}
+      IO.puts "Generated upload: "
+      IO.inspect upload
+      upload
+  end
+
+  def store_image(upload) do
+      {:ok, filename} = store(upload)
+      filename
+  end
+
+  def get_cached_image_url(filename) do
+      url(filename)
+  end
+
+
 end
