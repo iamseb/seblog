@@ -67,7 +67,8 @@ defmodule Seblog.CachedImage do
 
   def get_remote_image(url) do
       uuid = Ecto.UUID.generate()
-      %HTTPoison.Response{headers: [{"Content-Type", content_type}], body: body} = HTTPoison.get!(url, [], [follow_redirect: true])
+      %HTTPoison.Response{header: header, body: body} = HTTPoison.get!(url, [], [follow_redirect: true])
+      content_type = get_header(header, "Content-Type")
       ext = url |> Path.extname |> String.split("?") |> hd
       path = Plug.Upload.random_file!("image")
       File.write!(path, body)
@@ -86,5 +87,12 @@ defmodule Seblog.CachedImage do
       url(filename)
   end
 
+
+  defp get_header(headers, key) do
+    headers
+    |> Enum.filter(fn({k, _}) -> k == key end)
+    |> hd
+    |> elem(1)
+  end
 
 end
