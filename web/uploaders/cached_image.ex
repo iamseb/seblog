@@ -32,8 +32,8 @@ defmodule Seblog.CachedImage do
   end
 
   def transform(:original, {file, _scope}) do
-    case Path.extname(file.filename) do 
-      ".png" -> {:pngcrush, ""}
+    case Path.extname(file.file_name) do 
+      ".png" -> {:pngcrush, "", :png}
       _ -> {:noaction}
     end
   end
@@ -68,7 +68,7 @@ defmodule Seblog.CachedImage do
       IO.puts "Getting image: " <> url
       asset_host = Application.get_env(:arc, :asset_host)
       cond do
-          url =~ asset_host && !force -> url
+          url =~ asset_host && !force -> %{:thumb => url, :original => url}
           true ->
               url
               |> get_remote_image
@@ -117,6 +117,7 @@ defmodule Seblog.CachedImage do
 
   def replace_images(content, force \\ :false) do
       content = String.replace(content, ~r/data-fullsize=".*?"/, "")
+      IO.puts "Replacing content: #{content}"
       content = Regex.scan(
         ~r/<img.*?src="(.*?)"/s, 
         content, 

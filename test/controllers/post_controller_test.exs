@@ -65,7 +65,7 @@ defmodule Seblog.PostControllerTest do
     refute Repo.get(Post, post.id)
   end
 
-  @ifttt_attrs %{content: "This is some content", title: "This is a title", url: "https://sebpotter.com", image: "https://images.sebpotter.com/seb.jpg"}
+  @ifttt_attrs %{content: "This is some content", title: "This is a title", url: "https://sebpotter.com", image: "https://upload.wikimedia.org/wikipedia/commons/c/c4/PM5544_with_non-PAL_signals.png"}
 
   test "creates post from ifttt web call", %{} do
     conn = build_conn
