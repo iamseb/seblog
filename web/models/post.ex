@@ -54,7 +54,6 @@ defmodule Seblog.Post do
 
   def cache_remote_images(changeset) do
     content = get_field(changeset, :content)
-    content
     |> Seblog.CachedImage.replace_images
 
     put_change(changeset, :content, content)
