@@ -35,7 +35,7 @@ div.progressive-container {
   background-repeat: no-repeat;
 }
 
-div.progressive-container img {
+div.content.post img[data-fullsize] {
   -webkit-filter:blur(4px) grayscale(70%);
   -ms-filter:blur(4px) grayscale(70%);
   filter:blur(4px) grayscale(70%);

@@ -31,6 +31,13 @@ defmodule Seblog.CachedImage do
     {:convert, "-thumbnail 100 -format png", :png}
   end
 
+  def transform(:original, {file, _scope}) do
+    case Path.extname(file.filename) do 
+      ".png" -> {:pngcrush, ""}
+      _ -> {:noaction}
+    end
+  end
+
   # Override the persisted filenames:
   # def filename(version, _) do
   #   version
@@ -104,6 +111,9 @@ defmodule Seblog.CachedImage do
       |> elem(1)
   end
 
+  def replace_images(content = nil) do
+    content
+  end
 
   def replace_images(content, force \\ :false) do
       content = String.replace(content, ~r/data-fullsize=".*?"/, "")

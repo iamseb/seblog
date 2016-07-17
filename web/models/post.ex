@@ -26,6 +26,7 @@ defmodule Seblog.Post do
   def changeset(model, params \\ %{}) do
     model
     |> cast(params, @required_fields, @optional_fields)
+    |> cache_remote_images
     |> make_excerpt
     |> slugify
   end
@@ -50,4 +51,12 @@ defmodule Seblog.Post do
     
     put_change(changeset, :slug, slug)
   end
-end
+
+  def cache_remote_images(changeset) do
+    content = get_field(changeset, :content)
+    content
+    |> Seblog.CachedImage.replace_images
+
+    put_change(changeset, :content, content)
+  end
+ end
