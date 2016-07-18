@@ -2,7 +2,7 @@ defmodule Seblog.PostControllerTest do
   use Seblog.ConnCase
 
   alias Seblog.Post
-  @valid_attrs %{content: "some content", excerpt: "some content", pub_date: "2010-04-17 14:00:00", slug: "some content", status: "some content", title: "some content"}
+  @valid_attrs %{content: "some content", excerpt: "some content", pub_date: "2010-04-17 14:00:00", slug: "some content", status: "publish", title: "some content"}
   @invalid_attrs %{}
 
   test "lists all entries on index", %{conn: conn} do
@@ -74,5 +74,13 @@ defmodule Seblog.PostControllerTest do
     conn = post conn, uri, post: @ifttt_attrs
     assert text_response(conn, 200) =~ "ok"
     assert Repo.get_by(Post, slug: Slugger.slugify_downcase(@ifttt_attrs.title))
+  end
+
+  test "draft creates email notification",  %{conn: conn} do
+    draft_attrs = Map.put(@valid_attrs, :status, "draft")
+    IO.inspect draft_attrs
+    conn = post conn, post_path(conn, :create), post: draft_attrs
+    assert redirected_to(conn) == post_path(conn, :index)
+    assert File.read!("/tmp/mailgun.json") =~ Slugger.slugify_downcase(draft_attrs.title)
   end
 end

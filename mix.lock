@@ -17,6 +17,7 @@
   "httpoison": {:hex, :httpoison, "0.9.0", "68187a2daddfabbe7ca8f7d75ef227f89f0e1507f7eecb67e4536b3c516faddb", [:mix], [{:hackney, "~> 1.6.0", [hex: :hackney, optional: false]}]},
   "idna": {:hex, :idna, "1.2.0", "ac62ee99da068f43c50dc69acf700e03a62a348360126260e87f2b54eced86b2", [:rebar3], []},
   "jose": {:hex, :jose, "1.7.8", "cb9463b80bc26901bcfed80053a2c394f024ca7ec779f34091e285bbf02bdb89", [:mix, :rebar], [{:base64url, "~> 0.0.1", [hex: :base64url, optional: false]}]},
+  "mailgun": {:git, "https://github.com/chrismccord/mailgun/", "ace116f37a86b3b11cecad6f37c4599f4552452b", []},
   "metrics": {:hex, :metrics, "1.0.1", "25f094dea2cda98213cecc3aeff09e940299d950904393b2a29d191c346a8486", [:rebar3], []},
   "mimerl": {:hex, :mimerl, "1.0.2", "993f9b0e084083405ed8252b99460c4f0563e41729ab42d9074fd5e52439be88", [:rebar3], []},
   "mogrify": {:hex, :mogrify, "0.3.2", "10983c04817f5aa420d71b575d0bb6575d9c2c90925743de1d8b4bd274105ed0", [:mix], []},

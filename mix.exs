@@ -46,6 +46,7 @@ defmodule Seblog.Mixfile do
      {:arc, "~> 0.5.2"},
      {:ex_aws, "~> 0.4.10"}, # Required if using Amazon S3
      {:mogrify, "~> 0.3.2"},
+     {:mailgun, git: "https://github.com/chrismccord/mailgun/"}
     ]
 
   end

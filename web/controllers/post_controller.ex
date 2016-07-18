@@ -33,6 +33,7 @@ defmodule Seblog.PostController do
 
     case Repo.insert(changeset) do
       {:ok, post} ->
+        GenEvent.notify(Seblog.EventManager, {:notify_content, post})
         Seblog.Cloudflare.purge_cache(make_cache_urls(conn, post))
         conn
         |> put_flash(:info, "Post created successfully.")
@@ -66,6 +67,7 @@ defmodule Seblog.PostController do
 
     case Repo.update(changeset) do
       {:ok, post} ->
+        GenEvent.notify(Seblog.EventManager, {:notify_content, post})
         Seblog.Cloudflare.purge_cache(make_cache_urls(conn, post))
         conn
         |> put_flash(:info, "Post updated successfully.")
@@ -109,6 +111,7 @@ defmodule Seblog.PostController do
       %{"title" => title, "content" => content, "status" => "draft"}
     )
     post = Repo.insert!(changeset)
+    GenEvent.notify(Seblog.EventManager, {:notify_content, post})
     Seblog.Cloudflare.purge_cache(make_cache_urls(conn, post))
     text(conn, "ok")
   end

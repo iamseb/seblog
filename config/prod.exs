@@ -20,6 +20,9 @@ config :seblog, Seblog.Endpoint,
   cloudflare_api_user: System.get_env("CLOUDFLARE_API_USER"),
   cloudflare_api_key: System.get_env("CLOUDFLARE_API_KEY")
 
+config :seblog, mailgun_domain: System.get_env("MAILGUN_API_URL"),
+                mailgun_key: System.get_env("MAILGUN_API_KEY")
+
 
 # Configure your database
 config :seblog, Seblog.Repo,
