@@ -14,9 +14,9 @@ defmodule Seblog.Mailer do
 
     url = page_url(Seblog.Endpoint, :show, post.pub_date.year, post.pub_date.month, post.slug)
 
-    send_email to: @notify,
+    IO.inspect send_email to: @notify,
                from: @from,
                subject: "New draft: #{post.title}",
-               html: "There's a new draft message. \n\n View it: <a href=\"#{url}\"></a>"
+               text: "There's a new draft message. \n\n View it: #{url}"
   end
 end
