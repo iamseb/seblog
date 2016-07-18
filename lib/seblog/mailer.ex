@@ -1,7 +1,7 @@
 defmodule Seblog.Mailer do
   @config domain: Application.get_env(:seblog, :mailgun_domain),
           key: Application.get_env(:seblog, :mailgun_key),
-          mode: :test,
+          mode: Mix.env,
           test_file_path: "/tmp/mailgun.json"
   use Mailgun.Client, @config
 

@@ -25,7 +25,7 @@ defmodule Seblog.Cloudflare do
   defp call_cache_url(zone_id, files) do
     cf_headers = %{"X-Auth-Email" => @api_user, "X-Auth-Key" => @api_key, "Content-Type" => "application/json"}
     data = %{files: files} |> Poison.encode!
-    IO.inspect HTTPoison.request(
+    HTTPoison.request(
       :delete,
       "https://api.cloudflare.com/client/v4/zones/#{zone_id}/purge_cache", 
       data, 

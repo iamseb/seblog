@@ -89,8 +89,8 @@ defmodule Seblog.CachedImage do
       path = Plug.Upload.random_file!("image")
       File.write!(path, body)
       upload = %Plug.Upload{content_type: content_type, filename: "#{uuid}.#{ext}", path: path}
-      IO.puts "Generated upload: "
-      IO.inspect upload
+      # IO.puts "Generated upload: "
+      # IO.inspect upload
       upload
   end
 
@@ -117,7 +117,7 @@ defmodule Seblog.CachedImage do
 
   def replace_images(content, force \\ :false) do
       content = String.replace(content, ~r/data-fullsize=".*?"/, "")
-      IO.puts "Replacing content: #{content}"
+      # IO.puts "Replacing content: #{content}"
       content = Regex.scan(
         ~r/<img.*?src="(.*?)"/s, 
         content, 
