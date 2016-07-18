@@ -12,7 +12,7 @@ defmodule Seblog.Mailer do
 
   def send_draft_notify(post) do
 
-    url = page_url(Seblog.Endpoint, :show, post.pub_date.year, post.pub_date.month, post.slug))
+    url = page_url(Seblog.Endpoint, :show, post.pub_date.year, post.pub_date.month, post.slug)
 
     send_email to: @notify,
                from: @from,
