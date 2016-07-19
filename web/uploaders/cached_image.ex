@@ -87,7 +87,7 @@ defmodule Seblog.CachedImage do
       uuid = Ecto.UUID.generate()
       %HTTPoison.Response{headers: headers, body: body} = HTTPoison.get!(url, [], [follow_redirect: true])
       content_type = get_header(headers, "Content-Type")
-      ext = Plug.MIME.extensions(content_type || "image/jpeg") |> hd
+      ext = Plug.MIME.extensions((String.split(content_type, ";") |> hd) || "image/jpeg") |> hd
       path = Plug.Upload.random_file!("image")
       File.write!(path, body)
       upload = %Plug.Upload{content_type: content_type, filename: "#{uuid}.#{ext}", path: path}
