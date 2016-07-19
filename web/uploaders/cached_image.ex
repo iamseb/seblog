@@ -65,7 +65,7 @@ defmodule Seblog.CachedImage do
 
 
   def cache_remote_image(url, force \\ :false) do
-      # IO.puts "Getting image: " <> url
+      IO.puts "Getting image: " <> url
       asset_host = Application.get_env(:arc, :asset_host)
       cond do
           url =~ asset_host && !force -> 
