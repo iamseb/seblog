@@ -1,9 +1,9 @@
 <%= if assigns[:post] != nil do %>
-<%= if post_image(@post.excerpt) do %>
+<%= if post_image(@post.excerpt) != @post.excerpt do %>
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="<%= post_image(@post.excerpt) %>">
 <% else %>
-<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:card" content="summary">
 <% end %>
 <meta name="twitter:site" content="@iamseb">
 <meta name="twitter:creator" content="@iamseb">
