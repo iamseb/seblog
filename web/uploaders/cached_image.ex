@@ -68,7 +68,9 @@ defmodule Seblog.CachedImage do
       IO.puts "Getting image: " <> url
       asset_host = Application.get_env(:arc, :asset_host)
       cond do
-          url =~ asset_host && !force -> %{:thumb => url, :original => url}
+          url =~ asset_host && !force -> 
+            filename = url |> Path.basename
+            get_cached_image_urls(filename)
           true ->
               url
               |> get_remote_image
@@ -89,8 +91,8 @@ defmodule Seblog.CachedImage do
       path = Plug.Upload.random_file!("image")
       File.write!(path, body)
       upload = %Plug.Upload{content_type: content_type, filename: "#{uuid}.#{ext}", path: path}
-      # IO.puts "Generated upload: "
-      # IO.inspect upload
+      IO.puts "Generated upload: "
+      IO.inspect upload
       upload
   end
 
@@ -111,14 +113,32 @@ defmodule Seblog.CachedImage do
       |> elem(1)
   end
 
+  def get_base_filename(url) do
+    String.replace(url, "original-", "") |> String.replace("thumb-", "")
+  end
+
   def replace_images(content = nil) do
     content
   end
 
   def replace_images(content, force \\ :false) do
-      content = String.replace(content, ~r/data-fullsize=".*?"/, "")
+
+      # content = String.replace(content, ~r/data-fullsize=".*?"/, "")
       # IO.puts "Replacing content: #{content}"
       content = Regex.scan(
+        ~r/<img.*?src="(.*?)".*?data-fullsize="(.*?)"/s, 
+        content, 
+        capture: :all_but_first
+        ) 
+      |> Enum.reduce(content, fn(x, acc) -> 
+        [src|full] = x
+        full = full |> hd |> get_base_filename
+        String.replace(acc, src, full)
+      end
+      )
+
+      content = String.replace(content, ~r/data-fullsize=".*?"/, "")
+      Regex.scan(
         ~r/<img.*?src="(.*?)"/s, 
         content, 
         capture: :all_but_first
