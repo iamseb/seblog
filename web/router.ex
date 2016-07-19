@@ -41,8 +41,8 @@ defmodule Seblog.Router do
     resources "/admin/admins", AdminController
     get "/page/:page", PageController, :by_page
     get "/", PageController, :index
+    get "/approve-draft/:id/:key", PostController, :quick_approve_draft
     get "/:year/:date/:slug", PageController, :show
-    
   end
 
   

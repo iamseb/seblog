@@ -15,4 +15,5 @@ defmodule Seblog.PostTest do
     changeset = Post.changeset(%Post{}, @invalid_attrs)
     refute changeset.valid?
   end
+
 end

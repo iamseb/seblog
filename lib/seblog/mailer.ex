@@ -6,17 +6,19 @@ defmodule Seblog.Mailer do
   use Mailgun.Client, @config
 
   import Seblog.Router.Helpers
+  alias Seblog.Post
+
 
   @from "seblog@sebpotter.com"
-  @notify "iamseb@gmail.com"
+  @notify "seblog@sebpotter.com"
 
   def send_draft_notify(post) do
 
-    url = post_url(Seblog.Endpoint, :show, post.id)
+    url = post_url(Seblog.Endpoint, :quick_approve_draft, post.id, Post.sign_post_url(post))
 
     IO.inspect send_email to: @notify,
                from: @from,
                subject: "New draft: #{post.title}",
-               text: "There's a new draft message. \n\n View it: #{url}"
+               text: "There's a new draft message. \n\n Approve it: #{url}"
   end
 end

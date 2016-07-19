@@ -66,4 +66,19 @@ defmodule Seblog.Post do
         put_change(changeset, :content, content)
     end
   end
+
+  def sign_post_url(post) do
+    secret = Application.get_env(:seblog, Seblog.Endpoint)[:secret_key_base]
+    :crypto.hmac(:sha, secret, Seblog.Router.Helpers.post_url(Seblog.Endpoint, :show, post.id))
+    |> Base.encode16
+    |> String.downcase    
  end
+
+ def verify_signed_url(post, key) do
+   unless key == sign_post_url(post) do
+    raise ArgumentError, "The key is incorrect"
+   end
+   {:ok, key}
+ end
+
+end

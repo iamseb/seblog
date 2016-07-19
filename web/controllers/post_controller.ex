@@ -121,6 +121,15 @@ defmodule Seblog.PostController do
     text(conn, "Bad Request")
   end
 
+  def quick_approve_draft(conn, params = %{"id" => id, "key" => key}) do
+    post = Repo.get!(Post, id)
+    Post.verify_signed_url(post, key)
+    changeset = Post.changeset(post, %{"status" => "publish"})
+    Repo.update!(changeset)
+    IO.puts "Published post: " <> post.slug
+    text(conn, "ok")
+  end
+
 
 end
 

@@ -99,5 +99,58 @@ defmodule Seblog.PostControllerTest do
     assert post.content == ~s(This is a test <img src="https://images.sebpotter.com/web/static/assets/img_cache/thumb-full.png" data-fullsize="https://images.sebpotter.com/web/static/assets/img_cache/original-full.jpg"  /> with some content)
   end
 
+  test "signed url for draft approval" do
+    conn = build_conn
+    key = Application.get_env(:seblog, Seblog.Endpoint)[:secret_key_base]
+    uri = post_path(conn, :ifttt) <> "?key=" <> URI.encode(key)
+    conn = post conn, uri, post: @ifttt_attrs
+    assert text_response(conn, 200) =~ "ok"
+    post = Repo.get_by(Post, slug: Slugger.slugify_downcase(@ifttt_attrs.title))
+    
+    key = Post.sign_post_url(post)
+    assert {:ok, key} == Post.verify_signed_url(post, key)
+  end
+
+
+  test "draft approval publishes post" do
+    conn = build_conn
+    key = Application.get_env(:seblog, Seblog.Endpoint)[:secret_key_base]
+    uri = post_path(conn, :ifttt) <> "?key=" <> URI.encode(key)
+    conn = post conn, uri, post: @ifttt_attrs
+    assert text_response(conn, 200) =~ "ok"
+    post = Repo.get_by(Post, slug: Slugger.slugify_downcase(@ifttt_attrs.title))
+    
+    key = Post.sign_post_url(post)
+    conn = build_conn
+    url = post_path(conn, :quick_approve_draft, post.id, Post.sign_post_url(post))
+    conn = get conn, url
+    assert text_response(conn, 200) =~ "ok"
+    post = Repo.get(Post, post.id)
+    assert post.status == "publish"
+
+
+  end
+
+
+  test "invalid key for draft approval does not publish post" do
+    conn = build_conn
+    key = Application.get_env(:seblog, Seblog.Endpoint)[:secret_key_base]
+    uri = post_path(conn, :ifttt) <> "?key=" <> URI.encode(key)
+    conn = post conn, uri, post: @ifttt_attrs
+    assert text_response(conn, 200) =~ "ok"
+    post = Repo.get_by(Post, slug: Slugger.slugify_downcase(@ifttt_attrs.title))
+    
+    key = "12345678901234567890"
+    conn = build_conn
+    url = post_path(conn, :quick_approve_draft, post.id, key)
+    assert_raise ArgumentError, "The key is incorrect", fn() -> 
+      conn = get conn, url
+    end
+    post = Repo.get(Post, post.id)
+    assert post.status == "draft"
+
+
+  end
+
 
 end
