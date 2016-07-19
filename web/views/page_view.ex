@@ -12,4 +12,8 @@ defmodule Seblog.PageView do
 
         end
     end
+
+    def post_image(content) do
+        String.replace(content, ~r/.*?data-fullsize="(.*?)".*/s, "\\1")
+    end
 end
