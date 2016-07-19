@@ -65,7 +65,7 @@ defmodule Seblog.CachedImage do
 
 
   def cache_remote_image(url, force \\ :false) do
-      IO.puts "Getting image: " <> url
+      # IO.puts "Getting image: " <> url
       asset_host = Application.get_env(:arc, :asset_host)
       cond do
           url =~ asset_host && !force -> 
@@ -91,8 +91,8 @@ defmodule Seblog.CachedImage do
       path = Plug.Upload.random_file!("image")
       File.write!(path, body)
       upload = %Plug.Upload{content_type: content_type, filename: "#{uuid}.#{ext}", path: path}
-      IO.puts "Generated upload: "
-      IO.inspect upload
+      # IO.puts "Generated upload: "
+      # IO.inspect upload
       upload
   end
 

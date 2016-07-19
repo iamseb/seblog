@@ -53,9 +53,17 @@ defmodule Seblog.Post do
   end
 
   def cache_remote_images(changeset) do
-    content = get_field(changeset, :content)
-    |> Seblog.CachedImage.replace_images
-
-    put_change(changeset, :content, content)
+    content = get_change(changeset, :content)
+    # IO.inspect changeset
+    # IO.inspect changeset.data
+    cond do
+      content == nil -> 
+        # IO.puts "BAILING OUT OF IMAGE TRANSFORM BECAUSE CONTENT UNCHANGED"
+        changeset
+      true -> 
+        content = content 
+        |> Seblog.CachedImage.replace_images
+        put_change(changeset, :content, content)
+    end
   end
  end

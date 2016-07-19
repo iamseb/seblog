@@ -1,4 +1,4 @@
-defmodule Seblog.PostControllerTest do
+defmodule Seblog.CachedImageTest do
   use Seblog.ConnCase
 
   test "deals with existing content", %{} do

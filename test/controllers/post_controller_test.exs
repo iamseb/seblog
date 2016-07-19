@@ -1,5 +1,5 @@
 defmodule Seblog.PostControllerTest do
-  use Seblog.ConnCase
+  use Seblog.ConnCase, async: false
 
   alias Seblog.Post
   @valid_attrs %{content: "some content", excerpt: "some content", pub_date: "2010-04-17 14:00:00", slug: "some content", status: "publish", title: "some content"}
@@ -81,6 +81,23 @@ defmodule Seblog.PostControllerTest do
     IO.inspect draft_attrs
     conn = post conn, post_path(conn, :create), post: draft_attrs
     assert redirected_to(conn) == post_path(conn, :index)
-    assert File.read!("/tmp/mailgun.json") =~ Slugger.slugify_downcase(draft_attrs.title)
+    post = Repo.get_by(Post, slug: Slugger.slugify_downcase(draft_attrs.title))
+    # wait for 1 second for async notify to complete
+    :timer.sleep(1000)
+    assert File.read!("/tmp/mailgun.json") =~ post.id
   end
+
+  @image_attrs %{content: ~s(This is a test <img src="http://images.sebpotter.com/disaster.jpg" data-fullsize="https://images.sebpotter.com/original-full.jpg" /> with some content), pub_date: "2010-04-17 14:00:00", status: "publish", title: "some content"}
+  test "images not changed when content unchanged",  %{conn: conn} do
+    in_conn = post conn, post_path(conn, :create), post: @image_attrs
+    assert redirected_to(in_conn) == post_path(in_conn, :index)
+    post = Repo.get_by(Post, slug: Slugger.slugify_downcase(@image_attrs.title))
+    assert post.content == ~s(This is a test <img src="https://images.sebpotter.com/web/static/assets/img_cache/thumb-full.png" data-fullsize="https://images.sebpotter.com/web/static/assets/img_cache/original-full.jpg"  /> with some content)
+    up_conn = put conn, post_path(conn, :update, post), post: %{content: post.content}
+    post = Repo.get_by(Post, slug: post.slug)
+    assert redirected_to(up_conn) == post_path(up_conn, :show, post)
+    assert post.content == ~s(This is a test <img src="https://images.sebpotter.com/web/static/assets/img_cache/thumb-full.png" data-fullsize="https://images.sebpotter.com/web/static/assets/img_cache/original-full.jpg"  /> with some content)
+  end
+
+
 end
