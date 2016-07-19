@@ -19,6 +19,6 @@ defmodule Seblog.Mailer do
     IO.inspect send_email to: @notify,
                from: @from,
                subject: "New draft: #{post.title}",
-               text: "There's a new draft message. \n\n Approve it: #{url}"
+               html: Phoenix.View.render_to_string(Seblog.EmailView, "notify_draft_post.html", post: post, url: url)
   end
 end
