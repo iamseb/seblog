@@ -48,9 +48,8 @@ config :guardian, Guardian,
   issuer: "Seblog",
   ttl: { 30, :days},
   verify_issuer: true,
-  secret_key: System.get_env("SECRET_KEY_BASE"),
+  secret_key: "7JyRrsVsYB8izuJTJvgMfkbl45pYIIRefD2wOnzrhoIkNbJDLQzeigVGryThQc/O",
   serializer: Seblog.GuardianSerializer
-
 
 
 import_config "config.secret.exs"
