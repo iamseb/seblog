@@ -70,6 +70,7 @@
         <%= render @view_module, @view_template, assigns %>
 
     </div>
+    <script src="https://cdn.rawgit.com/showdownjs/showdown/1.0.1/dist/showdown.min.js"></script>
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
     <%= render_existing view_module(@conn), "scripts.html", assigns %>
     </body>

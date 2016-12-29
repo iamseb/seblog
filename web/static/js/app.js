@@ -17,3 +17,21 @@ import "phoenix_html"
 //
 // Local files can be imported directly using relative
 // paths "./socket" or full ones "web/static/js/socket".
+
+
+$(document).ready(function() {
+
+  $('#post_content').keyup(function(){
+      var text = $('#post_content').val(),
+      converter = new showdown.Converter(),
+      html = converter.makeHtml(text);
+      $('#content_preview').html(html);
+  });
+  $('#post_title').keyup(function(){
+      var text = $('#post_title').val();
+      $('#title_preview').html(text);
+  });
+
+
+});
+

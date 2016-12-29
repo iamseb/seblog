@@ -3,4 +3,6 @@
 <%= render "form.html", changeset: @changeset,
                         action: post_path(@conn, :update, @post) %>
 
+
+<br clear="all" />
 <%= link "Back", to: post_path(@conn, :index) %>

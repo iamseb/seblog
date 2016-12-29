@@ -1,3 +1,5 @@
+<div class="col-md-5">
+
 <%= form_for @changeset, @action, fn f -> %>
   <%= if @changeset.action do %>
     <div class="alert alert-danger">
@@ -55,3 +57,9 @@
     <%= submit "Submit", class: "btn btn-primary" %>
   </div>
 <% end %>
+
+</div>
+<div class="col-md-7">
+<h2 id="title_preview"></h2>
+<div id="content_preview"></div>
+</div>
