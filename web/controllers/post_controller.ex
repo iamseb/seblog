@@ -12,7 +12,7 @@ defmodule Seblog.PostController do
         [page_url(conn, :index)]
       true ->
         [
-          page_url(conn, :index), 
+          page_url(conn, :index),
           page_url(conn, :show, post.pub_date.year, post.pub_date.month, post.slug)
         ]
       end
@@ -46,7 +46,22 @@ defmodule Seblog.PostController do
   def show(conn, %{"id" => id}) do
     post = Repo.get!(Post, id)
     render(conn, "show.html", post: post)
-  end 
+  end
+
+  def publish(conn, %{"id" => id}) do
+    post = Repo.get!(Post, id)
+    changeset = Post.changeset(post, %{status: "publish"})
+    case Repo.update(changeset) do
+      {:ok, post} ->
+        GenEvent.notify(Seblog.EventManager, {:notify_content, post})
+        Seblog.Cloudflare.purge_cache(make_cache_urls(conn, post))
+        conn
+        |> put_flash(:info, "Post published.")
+        |> redirect(to: post_path(conn, :index))
+      {:error, changeset} ->
+        render(conn, "edit.html", post: post, changeset: changeset)
+    end
+  end
 
   def edit(conn, %{"id" => id}) do
     post = Repo.get!(Post, id)
@@ -59,7 +74,7 @@ defmodule Seblog.PostController do
     changeset = Post.changeset(post)
     render(conn, "edit.html", post: post, changeset: changeset)
   end
-    
+
 
   def update(conn, %{"id" => id, "post" => post_params}) do
     post = Repo.get!(Post, id)
@@ -94,9 +109,9 @@ defmodule Seblog.PostController do
   def ifttt(conn, _params = %{"key" => key, "post" => post}) do
     secret = Application.get_env(:seblog, Seblog.Endpoint)[:secret_key_base]
     cond do
-      secret == key -> 
+      secret == key ->
         ifttt(conn, post)
-      true -> 
+      true ->
         text(conn, "Bad Key")
     end
   end
@@ -107,7 +122,7 @@ defmodule Seblog.PostController do
     img = ~s(<img src="#{image}">\n)
     content = img <> content <> read_more
     changeset = Post.changeset(
-      %Post{}, 
+      %Post{},
       %{"title" => title, "content" => content, "status" => "draft"}
     )
     post = Repo.insert!(changeset)

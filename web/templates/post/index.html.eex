@@ -24,6 +24,7 @@
       <td class="text-right">
         <%= link "Show", to: post_path(@conn, :show, post), class: "btn btn-default btn-xs" %>
         <%= link "Edit", to: post_path(@conn, :edit, post), class: "btn btn-default btn-xs" %>
+        <%= if post.status != "publish" do %><%= link "Publish", to: post_path(@conn, :publish, post), method: :post, class: "btn btn-info btn-xs" %><% end %>
         <%= link "Delete", to: post_path(@conn, :delete, post), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
       </td>
     </tr>

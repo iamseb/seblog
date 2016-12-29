@@ -15,7 +15,7 @@ defmodule Seblog.Router do
     plug Guardian.Plug.VerifySession
     plug Guardian.Plug.EnsureAuthenticated, handler: Seblog.Token
     plug Guardian.Plug.LoadResource
-  end  
+  end
 
   pipeline :api do
     plug :accepts, ["json"]
@@ -30,6 +30,7 @@ defmodule Seblog.Router do
   scope "/", Seblog do
     pipe_through [:browser, :browser_auth]
     get "/:year/:date/:slug/write", PostController, :edit
+    post "/admin/posts/:id/publish", PostController, :publish
     resources "/admin/posts", PostController
     resources "/admin/tags", TagController
   end
@@ -45,7 +46,7 @@ defmodule Seblog.Router do
     get "/:year/:date/:slug", PageController, :show
   end
 
-  
+
 
   # Other scopes may use custom stacks.
   # scope "/api", Seblog do
