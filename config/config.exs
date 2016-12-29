@@ -16,7 +16,9 @@ config :seblog, Seblog.Endpoint,
   secret_key_base: "7JyRrsVsYB8izuJTJvgMfkbl45pYIIRefD2wOnzrhoIkNbJDLQzeigVGryThQc/O",
   render_errors: [accepts: ~w(html json)],
   pubsub: [name: Seblog.PubSub,
-           adapter: Phoenix.PubSub.PG2]
+           adapter: Phoenix.PubSub.PG2],
+  site_name: "Seblog",
+  site_title: "Words and pictures."
 
 # Configures Elixir's Logger
 config :logger, :console,

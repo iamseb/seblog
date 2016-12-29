@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <%= render_existing view_module(@conn), "meta.html", assigns %>
-    <title><%= assigns[:page_title] || "From the mind of Seb - sebpotter.com" %></title>
+    <title><%= assigns[:page_title] || site_name(@conn) %> <%= site_title(@conn) %></title>
     <meta id="viewport" name="viewport" content ="width=device-width, initial-scale=1.0, overflow:hidden, user-scalable=no" />
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/public.css") %>">
     </head>
@@ -26,7 +26,7 @@
         <a href="https://www.linkedin.com/in/sebpotter" class="pseudo button icon-globe">Profile</a>
         <a href="https://github.com/iamseb/seblog" target="_blank" class="pseudo button icon-g">Github</a>
       </div>
-    </nav>      
+    </nav>
         <br clear="all"/>
         <main>
             <div class="flex one three-800">
@@ -39,7 +39,7 @@
           $(document).ready(function(){
             $("img[data-fullsize]").each(function(){
               var imgLarge = new Image();
-              imgLarge.src = $(this).data("fullsize"); 
+              imgLarge.src = $(this).data("fullsize");
               var outer_image = $(this);
               imgLarge.onload = function(){
                 outer_image.wrap("<div class=\"progressive-container\"></div>");
