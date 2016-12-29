@@ -6,12 +6,13 @@ use Mix.Config
 # The watchers configuration can be used to run external
 # watchers to your application. For example, we use it
 # with brunch.io to recompile .js and .css sources.
+
 config :seblog, Seblog.Endpoint,
   http: [port: 6777],
   debug_errors: true,
   code_reloader: true,
   check_origin: false,
-  watchers: [node: ["node_modules/brunch/bin/brunch", "watch", "--stdin"]]
+  watchers: [node: ["node_modules/brunch/bin/brunch", "watch", "--stdin", cd: Path.expand("../", __DIR__)]]
 
 # Watch static and templates for browser reloading.
 config :seblog, Seblog.Endpoint,
@@ -39,6 +40,17 @@ config :seblog, Seblog.Repo,
   password: "postgres",
   database: "seblog_dev",
   hostname: "localhost",
-  pool_size: 10
+  pool_size: 18
+
+config :guardian, Guardian,
+  allowed_algos: ["HS512"],
+  verify_module: Guardian.JWT,
+  issuer: "Seblog",
+  ttl: { 30, :days},
+  verify_issuer: true,
+  secret_key: System.get_env("SECRET_KEY_BASE"),
+  serializer: Seblog.GuardianSerializer
+
+
 
 import_config "config.secret.exs"

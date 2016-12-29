@@ -40,7 +40,7 @@ defmodule Seblog.Mixfile do
      {:httpoison, "~> 0.9.0"},
      {:websocket_client, git: "https://github.com/jeremyong/websocket_client"},
      {:comeonin, "~> 2.5"},
-     {:guardian, "~> 0.12.0"},
+     {:guardian, "~> 0.14.0"},
      {:earmark, "~> 1.0.0"},
      {:slugger, git: "https://github.com/h4cc/slugger"},
      {:arc, "~> 0.5.2"},

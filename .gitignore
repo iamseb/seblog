@@ -24,3 +24,5 @@ erl_crash.dump
 /config/*.secret.exs
 
 web/static/assets/img_cache/
+mix.lock
+
