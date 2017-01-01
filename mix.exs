@@ -45,6 +45,7 @@ defmodule Seblog.Mixfile do
      {:slugger, git: "https://github.com/h4cc/slugger"},
      {:arc, "~> 0.6.0"},
      {:arc_ecto, "~> 0.5.0"},
+     {:sweet_xml, "~> 0.6.0"},
      {:ex_aws, "~> 1.0.0"}, # Required if using Amazon S3
      {:mogrify, "~> 0.3.2"},
      {:mailgun, git: "https://github.com/chrismccord/mailgun/"},
