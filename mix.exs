@@ -19,7 +19,7 @@ defmodule Seblog.Mixfile do
   def application do
     [mod: {Seblog, []},
      applications: [:phoenix, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex, :ex_aws, :httpoison, :arc]]
+                    :phoenix_ecto, :postgrex, :ex_aws, :httpoison, :arc, :arc_ecto]]
   end
 
   # Specifies which paths to compile per environment.
@@ -43,8 +43,9 @@ defmodule Seblog.Mixfile do
      {:guardian, "~> 0.14.0"},
      {:earmark, "~> 1.0.0"},
      {:slugger, git: "https://github.com/h4cc/slugger"},
-     {:arc, "~> 0.5.2"},
-     {:ex_aws, "~> 0.4.10"}, # Required if using Amazon S3
+     {:arc, "~> 0.6.0"},
+     {:arc_ecto, "~> 0.5.0"},
+     {:ex_aws, "~> 1.0.0"}, # Required if using Amazon S3
      {:mogrify, "~> 0.3.2"},
      {:mailgun, git: "https://github.com/chrismccord/mailgun/"},
      {:html_sanitize_ex, "~> 1.0.0"}
@@ -59,7 +60,7 @@ defmodule Seblog.Mixfile do
   #
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
-    ["ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
+    ["ecto.setup": ["ecto.create", "ecto.migrate"], #, "run priv/repo/seeds.exs"],
      "ecto.reset": ["ecto.drop", "ecto.setup"],
      "test": ["ecto.create --quiet", "ecto.migrate", "test"]]
   end

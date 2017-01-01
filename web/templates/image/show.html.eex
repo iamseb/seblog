@@ -1,0 +1,28 @@
+<h2>Show image</h2>
+
+<ul>
+
+  <li>
+    <strong>Slug:</strong>
+    <%= @image.slug %>
+  </li>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @image.name %>
+  </li>
+
+  <li>
+    <strong>Base url:</strong>
+    <img src="<%= Seblog.Image.full_url(@image) %>" style="max-width: 80%;"/>
+  </li>
+
+  <li>
+    <strong>Description:</strong>
+    <%= @image.description %>
+  </li>
+
+</ul>
+
+<%= link "Edit", to: image_path(@conn, :edit, @image) %>
+<%= link "Back", to: image_path(@conn, :index) %>

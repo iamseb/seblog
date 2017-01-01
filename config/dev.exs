@@ -51,5 +51,6 @@ config :guardian, Guardian,
   secret_key: "7JyRrsVsYB8izuJTJvgMfkbl45pYIIRefD2wOnzrhoIkNbJDLQzeigVGryThQc/O",
   serializer: Seblog.GuardianSerializer
 
+config :arc, :local_dir, "web/static/assets"
 
 import_config "config.secret.exs"

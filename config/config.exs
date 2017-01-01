@@ -27,8 +27,14 @@ config :logger, :console,
 
 
 config :seblog, Seblog.CachedImage,
-  cache_base: "web/static/assets/img_cache",
+  cache_base: "img_cache",
   cache_widths: [tiny: 30, small: 200, medium: 400, large: 800, full: 1600]
+
+
+config :seblog, Seblog.S3Image,
+  cache_base: "img_cache",
+  cache_widths: [tiny: 30, small: 200, medium: 400, large: 800, full: 1600]
+
 
 config :arc,
   asset_host: "https://images.sebpotter.com"

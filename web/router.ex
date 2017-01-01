@@ -33,6 +33,7 @@ defmodule Seblog.Router do
     post "/admin/posts/:id/publish", PostController, :publish
     resources "/admin/posts", PostController
     resources "/admin/tags", TagController
+    resources "/admin/images", ImageController
   end
 
 

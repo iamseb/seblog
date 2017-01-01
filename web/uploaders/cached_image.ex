@@ -4,8 +4,6 @@ defmodule Seblog.CachedImage do
   # Include ecto support (requires package arc_ecto installed):
   # use Arc.Ecto.Definition
 
-  @versions [:original] #, :thumb]
-
   # def __storage do
   #   case Mix.env do
   #     :prod -> Arc.Storage.S3
@@ -32,7 +30,7 @@ defmodule Seblog.CachedImage do
   end
 
   def transform(:original, {file, _scope}) do
-    case Path.extname(file.file_name) do 
+    case Path.extname(file.file_name) do
       ".png" -> {:pngcrush, "", :png}
       _ -> {:noaction}
     end
@@ -68,7 +66,7 @@ defmodule Seblog.CachedImage do
       IO.puts "Getting image: " <> url
       asset_host = Application.get_env(:arc, :asset_host)
       cond do
-          url =~ asset_host && !force -> 
+          url =~ asset_host && !force ->
             filename = url |> Path.basename
             get_cached_image_urls(filename)
           true ->
@@ -126,11 +124,11 @@ defmodule Seblog.CachedImage do
       # content = String.replace(content, ~r/data-fullsize=".*?"/, "")
       # IO.puts "Replacing content: #{content}"
       content = Regex.scan(
-        ~r/<img.*?src="(.*?)".*?data-fullsize="(.*?)"/s, 
-        content, 
+        ~r/<img.*?src="(.*?)".*?data-fullsize="(.*?)"/s,
+        content,
         capture: :all_but_first
-        ) 
-      |> Enum.reduce(content, fn(x, acc) -> 
+        )
+      |> Enum.reduce(content, fn(x, acc) ->
         [src|full] = x
         full = full |> hd |> get_base_filename
         String.replace(acc, src, full)
@@ -139,10 +137,10 @@ defmodule Seblog.CachedImage do
 
       content = String.replace(content, ~r/data-fullsize=".*?"/, "")
       Regex.scan(
-        ~r/<img.*?src="(.*?)"/s, 
-        content, 
+        ~r/<img.*?src="(.*?)"/s,
+        content,
         capture: :all_but_first
-        ) 
+        )
       |> Enum.reduce([], fn (x, acc) -> acc ++ [x |> hd] end)
       |> Enum.reduce([], fn (x, acc) -> acc ++ [[x, cache_remote_image(x, force)]] end)
       |> Enum.reduce(content, fn(x, acc) -> replace_image_strings(acc, x) end)
