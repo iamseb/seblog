@@ -43,6 +43,15 @@ defmodule Seblog.S3Image do
     "#{base}"
   end
 
+    # Specify custom headers for s3 objects
+    # Available options are [:cache_control, :content_disposition,
+    #    :content_encoding, :content_length, :content_type,
+    #    :expect, :expires, :storage_class, :website_redirect_location]
+    #
+  def s3_object_headers(_version, {file, _scope}) do
+      [content_type: Plug.MIME.path(file.file_name)]
+  end
+
 
   def default_url(:thumb) do
     "https://placehold.it/100x100"
