@@ -7,6 +7,7 @@
     <title><%= site_name(@conn) %> - <%= site_title(@conn) %></title>
     <meta id="viewport" name="viewport" content ="width=device-width, initial-scale=1.0, overflow:hidden, user-scalable=no" />
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+    <%= render_existing view_module(@conn), "styles.html", assigns %>
     <style>
 
       body {
@@ -70,7 +71,6 @@
         <%= render @view_module, @view_template, assigns %>
 
     </div>
-    <script src="https://cdn.rawgit.com/showdownjs/showdown/1.0.1/dist/showdown.min.js"></script>
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
     <%= render_existing view_module(@conn), "scripts.html", assigns %>
     </body>

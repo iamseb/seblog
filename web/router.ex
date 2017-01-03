@@ -25,6 +25,8 @@ defmodule Seblog.Router do
   scope "/", Seblog do
     pipe_through [:api]
     post "/admin/posts/ifttt", PostController, :ifttt
+    get "/admin/images/pallette", ImageController, :pallette
+    get "/admin/images/pallette/:name", ImageController, :pallette
   end
 
   scope "/", Seblog do

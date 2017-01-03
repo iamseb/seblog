@@ -52,8 +52,19 @@ defmodule Seblog.S3Image do
       [content_type: Plug.MIME.path(file.file_name)]
   end
 
-
   def default_url(:thumb) do
     "https://placehold.it/100x100"
   end
+
+  def url_base(url) do
+    case Mix.Env do
+      :prod -> url
+      _ -> String.replace(url, "#{local_path}/", "")
+    end
+  end
+
+  defp local_path do
+    Application.get_env(:arc, :local_dir) || ""
+  end
+
 end

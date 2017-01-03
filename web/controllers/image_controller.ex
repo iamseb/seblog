@@ -62,4 +62,18 @@ defmodule Seblog.ImageController do
     |> put_flash(:info, "Image deleted successfully.")
     |> redirect(to: image_path(conn, :index))
   end
+
+
+  def pallette(conn, %{"name" => name}) do
+    #name = "portal"
+    query = from p in Image, where: ilike(p.name, ^"%#{name}%")
+    images = Repo.all(query)
+    render conn, "pallette.json", images: images
+  end
+
+  def pallette(conn, _params) do
+    pallette(conn, %{"name" => ""})
+  end
+
+
 end

@@ -23,12 +23,12 @@ defmodule Seblog.Image do
 
   def thumb_url(image, signed \\ :false) do
     Seblog.S3Image.url({image.base_url, image}, :thumb, signed: signed)
-    #|> String.replace("#{local_path}/", "")
+    |> Seblog.S3Image.url_base
   end
 
   def full_url(image, signed \\ :false) do
     Seblog.S3Image.url({image.base_url, image}, :original, signed: signed)
-    #|> String.replace("#{local_path}/", "")
+    |> Seblog.S3Image.url_base
   end
 
   defp local_path do
