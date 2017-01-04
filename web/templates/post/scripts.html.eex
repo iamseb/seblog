@@ -96,6 +96,13 @@
     });
     $('#post_title').keyup(function(){
       $('#title_preview').html($('#post_title').val());
-    })
+    });
+    $.getJSON('/admin/images/pallette/', function(data){
+      console.log(data);
+      $.each(data.images, function(i, item){
+        console.log("STUFF FOUND");
+        $("<img>").attr("id", "image-" + item.slug).attr("src", item.thumbnail).attr("alt", item.name).data("fullsize", item.url).appendTo("#image-panel");
+      })
+    });
   });
 </script>

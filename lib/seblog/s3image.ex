@@ -3,7 +3,7 @@ defmodule Seblog.S3Image do
   # Include ecto support (requires package arc_ecto installed):
   use Arc.Ecto.Definition
 
-  @versions [:original, :thumb]
+  @versions [:original, :thumb, :contentimage]
   @extension_whitelist ~w(.jpg .jpeg .gif .png)
 
   def __storage do
@@ -22,7 +22,11 @@ defmodule Seblog.S3Image do
 
   # Define a thumbnail transformation:
   def transform(:thumb, _) do
-    {:convert, "-thumbnail 100 -format png", :png}
+    {:convert, "-define jpeg:size=200x200 -thumbnail 100x100^ -gravity center -extent 100x100 -format png", :png}
+  end
+
+  def transform(:contentimage, _) do
+    {:convert, "-thumbnail 600x600 -gravity center -format png", :png}
   end
 
   # def transform(:original, {file, _scope}) do
@@ -50,10 +54,6 @@ defmodule Seblog.S3Image do
     #
   def s3_object_headers(_version, {file, _scope}) do
       [content_type: Plug.MIME.path(file.file_name)]
-  end
-
-  def default_url(:thumb) do
-    "https://placehold.it/100x100"
   end
 
   def url_base(url) do
