@@ -18,7 +18,8 @@ config :seblog, Seblog.Endpoint,
   cache_static_manifest: "priv/static/manifest.json",
   secret_key_base: System.get_env("SECRET_KEY_BASE"),
   cloudflare_api_user: System.get_env("CLOUDFLARE_API_USER"),
-  cloudflare_api_key: System.get_env("CLOUDFLARE_API_KEY")
+  cloudflare_api_key: System.get_env("CLOUDFLARE_API_KEY"),
+  google_analytics: System.get_env("GOOGLE_ANALYTICS")
 
 config :seblog, mailgun_domain: System.get_env("MAILGUN_API_URL"),
                 mailgun_key: System.get_env("MAILGUN_API_KEY")

@@ -18,7 +18,8 @@ config :seblog, Seblog.Endpoint,
   pubsub: [name: Seblog.PubSub,
            adapter: Phoenix.PubSub.PG2],
   site_name: "Seblog",
-  site_title: "Words and pictures."
+  site_title: "Words and pictures.",
+  google_analytics: ""
 
 # Configures Elixir's Logger
 config :logger, :console,

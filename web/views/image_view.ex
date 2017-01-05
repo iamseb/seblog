@@ -12,7 +12,8 @@ defmodule Seblog.ImageView do
       name: image.name,
       slug: image.slug,
       thumbnail: Seblog.Image.thumb_url(image),
-      url: Seblog.Image.full_url(image)
+      url: Seblog.Image.full_url(image),
+      contentimage: Seblog.Image.content_url(image)
     }
   end
 

@@ -22,11 +22,11 @@ defmodule Seblog.S3Image do
 
   # Define a thumbnail transformation:
   def transform(:thumb, _) do
-    {:convert, "-define jpeg:size=200x200 -thumbnail 100x100^ -gravity center -extent 100x100 -format png", :png}
+    {:convert, "-define jpeg:size=200x200 -thumbnail 100x100^ -gravity center -extent 100x100 -unsharp 0x.5 -format png", :png}
   end
 
   def transform(:contentimage, _) do
-    {:convert, "-thumbnail 600x600 -gravity center -format png", :png}
+    {:convert, "-define jpeg:size=1200x1200 -thumbnail 600x600 -gravity center -unsharp 0x.5 -format png", :png}
   end
 
   # def transform(:original, {file, _scope}) do
@@ -47,11 +47,11 @@ defmodule Seblog.S3Image do
     "#{base}"
   end
 
-    # Specify custom headers for s3 objects
-    # Available options are [:cache_control, :content_disposition,
-    #    :content_encoding, :content_length, :content_type,
-    #    :expect, :expires, :storage_class, :website_redirect_location]
-    #
+  # Specify custom headers for s3 objects
+  # Available options are [:cache_control, :content_disposition,
+  #    :content_encoding, :content_length, :content_type,
+  #    :expect, :expires, :storage_class, :website_redirect_location]
+  #
   def s3_object_headers(_version, {file, _scope}) do
       [content_type: Plug.MIME.path(file.file_name)]
   end

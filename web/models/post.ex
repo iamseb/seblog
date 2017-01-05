@@ -26,7 +26,6 @@ defmodule Seblog.Post do
   def changeset(model, params \\ %{}) do
     model
     |> cast(params, @required_fields, @optional_fields)
-    |> cache_remote_images
     |> make_excerpt
     |> slugify
   end
@@ -36,19 +35,19 @@ defmodule Seblog.Post do
     excerpt = cond do
       excerpt != nil ->
         excerpt
-        |> String.split("<!-- break -->", trim: true) 
+        |> String.split("<!-- break -->", trim: true)
         |> Enum.at(0)
       true ->
         ""
     end
-    
+
     put_change(changeset, :excerpt, excerpt)
   end
 
   def slugify(changeset) do
     slug = get_field(changeset, :title)
     |> Slugger.slugify_downcase
-    
+
     put_change(changeset, :slug, slug)
   end
 
@@ -57,11 +56,11 @@ defmodule Seblog.Post do
     # IO.inspect changeset
     # IO.inspect changeset.data
     cond do
-      content == nil -> 
+      content == nil ->
         # IO.puts "BAILING OUT OF IMAGE TRANSFORM BECAUSE CONTENT UNCHANGED"
         changeset
-      true -> 
-        content = content 
+      true ->
+        content = content
         |> Seblog.CachedImage.replace_images
         put_change(changeset, :content, content)
     end
@@ -71,7 +70,7 @@ defmodule Seblog.Post do
     secret = Application.get_env(:seblog, Seblog.Endpoint)[:secret_key_base]
     :crypto.hmac(:sha, secret, Seblog.Router.Helpers.post_url(Seblog.Endpoint, :show, post.id))
     |> Base.encode16
-    |> String.downcase    
+    |> String.downcase
  end
 
  def verify_signed_url(post, key) do

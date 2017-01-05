@@ -31,6 +31,11 @@ defmodule Seblog.Image do
     |> Seblog.S3Image.url_base
   end
 
+  def content_url(image, signed \\ :false) do
+    Seblog.S3Image.url({image.base_url, image}, :contentimage, signed: signed)
+    |> Seblog.S3Image.url_base
+  end
+
   defp local_path do
     Application.get_env(:arc, :local_dir) || ""
   end
