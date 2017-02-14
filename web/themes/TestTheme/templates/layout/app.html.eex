@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><%= site_name(@conn) %> - <%= site_title(@conn) %></title>
+    <meta id="viewport" name="viewport" content ="width=device-width, initial-scale=1.0, overflow:hidden, user-scalable=no" />
+    <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+    <%= render_existing view_module(@conn), "styles.html", assigns %>
+    <style>
+
+      body {
+          max-width: 900px;
+          font: 18px/1.4 'Open Sans', sans-serif;
+          color: #555;
+          background-color: #eee;
+      }
+
+      a {
+          display: inline-block;
+          padding: 10px 20px;
+          color: #fff;
+          text-decoration: none;
+      }
+
+      .excerpt img, .excerpt iframe {
+        display: none;
+      }
+
+      section {
+          margin-top: 60px;
+      }
+
+      textarea {
+          width: 80%;
+          height: 32em;
+          padding: 20px;
+          color: #555;
+          font: 18px/25px 'Roboto Mono', sans-serif;
+      }
+
+      /*script {
+          display: block;
+          margin-top: 10px;
+          padding-left: 10px;
+          border-left: 8px solid #ccc;
+          white-space: pre-wrap;
+          font: 14px/1.4 'Roboto Mono', sans-serif;
+      }*/
+
+      h1,h2,h3 {
+          line-height:1.2;
+      }
+    </style>
+    </head>
+
+    <body>
+    <div class="container">
+    <header class="header">
+    <nav role="navigation">
+      <ul class="nav nav-pills pull-right">
+        <%= render "sign_in_sign_out.html", conn: @conn %><br><br>
+      </ul>
+    </nav>
+    </header>
+
+      <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
+      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+
+        <%= render @view_module, @view_template, assigns %>
+
+    </div>
+    <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+    <%= render_existing view_module(@conn), "scripts.html", assigns %>
+    </body>
+</html>

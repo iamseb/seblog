@@ -9,6 +9,7 @@ defmodule Seblog.Router do
     plug :put_secure_browser_headers
     plug Guardian.Plug.VerifySession
     plug Guardian.Plug.LoadResource
+    plug Seblog.Plug.TemplateTheme, %{theme: "default"}
   end
 
   pipeline :browser_auth do
@@ -29,15 +30,19 @@ defmodule Seblog.Router do
     get "/admin/images/pallette/:name", ImageController, :pallette
   end
 
-  scope "/", Seblog do
+  scope "/admin", Seblog do
     pipe_through [:browser, :browser_auth]
-    get "/:year/:date/:slug/write", PostController, :edit
-    post "/admin/posts/:id/publish", PostController, :publish
-    resources "/admin/posts", PostController
-    resources "/admin/tags", TagController
-    resources "/admin/images", ImageController
+    post "/posts/:id/publish", PostController, :publish
+    resources "/posts", PostController
+    resources "/tags", TagController
+    resources "/images", ImageController
+    resources "/themes", ThemeController
   end
 
+  scope "/", Selog do
+    pipe_through [:browser, :browser_auth]
+    get "/:year/:date/:slug/write", PostController, :edit
+  end
 
   scope "/", Seblog do
     pipe_through :browser # Use the default browser stack

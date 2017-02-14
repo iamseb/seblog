@@ -1,0 +1,18 @@
+<h2>Show theme</h2>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @theme.name %>
+  </li>
+
+  <li>
+    <strong>Active:</strong>
+    <%= @theme.active %>
+  </li>
+
+</ul>
+
+<%= link "Edit", to: theme_path(@conn, :edit, @theme) %>
+<%= link "Back", to: theme_path(@conn, :index) %>

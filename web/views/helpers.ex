@@ -4,4 +4,5 @@ defmodule Seblog.ViewHelper do
   def site_name(conn), do: Application.get_env(:seblog, Seblog.Endpoint)[:site_name]
   def site_title(conn), do: Application.get_env(:seblog, Seblog.Endpoint)[:site_title]
   def google_analytics(conn), do: Application.get_env(:seblog, Seblog.Endpoint)[:google_analytics]
+
 end

@@ -1,0 +1,6 @@
+<h2>Edit theme</h2>
+
+<%= render "form.html", changeset: @changeset,
+                        action: theme_path(@conn, :update, @theme) %>
+
+<%= link "Back", to: theme_path(@conn, :index) %>

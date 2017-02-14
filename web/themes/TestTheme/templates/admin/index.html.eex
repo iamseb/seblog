@@ -1,0 +1,28 @@
+<h2>Listing admins</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Email</th>
+      <th>Password hash</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for admin <- @admins do %>
+    <tr>
+      <td><%= admin.email %></td>
+      <td><%= admin.password_hash %></td>
+
+      <td class="text-right">
+        <%= link "Show", to: admin_path(@conn, :show, admin), class: "btn btn-default btn-xs" %>
+        <%= link "Edit", to: admin_path(@conn, :edit, admin), class: "btn btn-default btn-xs" %>
+        <%= link "Delete", to: admin_path(@conn, :delete, admin), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<%= link "New admin", to: admin_path(@conn, :new) %>
