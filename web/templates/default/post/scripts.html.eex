@@ -23,7 +23,7 @@ var create_editor = function() {
       // For more information check http://docs.ckeditor.com/#!/api/CKEDITOR.config-cfg-customConfig
       customConfig: '',
       // Enabling extra plugins, available in the standard-all preset: http://ckeditor.com/presets-all
-      extraPlugins: 'autoembed,embedsemantic,image2',
+      extraPlugins: 'autoembed,embedsemantic',
       /*********************** File management support ***********************/
       // In order to turn on support for file uploads, CKEditor has to be configured to use some server side
       // solution with file upload/management capabilities, like for example CKFinder.
@@ -33,7 +33,7 @@ var create_editor = function() {
       // filebrowserUploadUrl: 'http://example.com/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files',
       /*********************** File management support ***********************/
       // Remove the default image plugin because image2, which offers captions for images, was enabled above.
-      removePlugins: 'image',
+      //removePlugins: 'image',
       // Make the editing area bigger than default.
       height: 461,
       // An array of stylesheets to style the WYSIWYG area.
@@ -95,7 +95,9 @@ var create_editor = function() {
     $('#content_preview').html(editor.getData());
     editor.on('change', function(evt){
       $('#content_preview').html(evt.editor.getData());
-      $("img[data-fullsize]").each(function(){
+      console.log("Updating editor content:");
+      console.log(evt.editor.getData());
+      $("#content_preview img").each(function(){
               var imgLarge = new Image();
               imgLarge.src = $(this).data("fullsize");
               var outer_image = $(this);
