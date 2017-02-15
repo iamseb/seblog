@@ -1,7 +1,0 @@
-<div class="full">
-    <br>
-    <div class="page content post format-<%= @post.format %>">
-        <h2><%= raw @post.title %></h2>
-        <p><%= raw @post.content %></p>
-    </div>
-</div>
