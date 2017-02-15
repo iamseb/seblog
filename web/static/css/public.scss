@@ -39,10 +39,11 @@ div.content.post img {
 
 div.progressive-container {
   margin: 0 !important;
+  margin-bottom: 1em !important;
   padding: 0 !important;
   height: auto;
   background-size: 100% !important;
-  background-repeat: no-repeat;
+  background-repeat: no-repeat !important;
 }
 
 div.content.post img[data-fullsize] {
