@@ -18,7 +18,7 @@ defmodule Seblog.Theme do
   end
 
   def get_current_theme do
-    Ecto.Repo.one(from x in Seblog.Theme, where: x.active == true, order_by: [desc: x.updated_at], limit: 1)
+    Ecto.Repo.first(from x in Seblog.Theme, where: x.active == true, order_by: [desc: x.updated_at], limit: 1)
   end
 
 end

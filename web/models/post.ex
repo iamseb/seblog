@@ -8,9 +8,9 @@ defmodule Seblog.Post do
     field :format, :string, default: "post"
     field :content, :string
     field :excerpt, :string
+    field :read_time, :integer, default: "0"
     field :pub_date, Ecto.DateTime, default: Ecto.DateTime.utc
     many_to_many :tags, Seblog.Tag, join_through: "posts_tags"
-
     timestamps
   end
 
@@ -71,13 +71,29 @@ defmodule Seblog.Post do
     :crypto.hmac(:sha, secret, Seblog.Router.Helpers.post_url(Seblog.Endpoint, :show, post.id))
     |> Base.encode16
     |> String.downcase
- end
+  end
 
- def verify_signed_url(post, key) do
-   unless key == sign_post_url(post) do
-    raise ArgumentError, "The key is incorrect"
-   end
-   {:ok, key}
- end
+  def verify_signed_url(post, key) do
+    unless key == sign_post_url(post) do
+      raise ArgumentError, "The key is incorrect"
+    end
+    {:ok, key}
+  end
 
+  def summary_no_image(post) do
+    post.excerpt |>
+      String.replace(~r/\<img .*\>/, "")
+  end
+
+  def first_image(post) do
+    imgs = Regex.run(~r/.*(<img.*>).*/Ums, post.excerpt, capture: :all_but_first)
+    cond do
+      imgs == nil ->
+        nil
+      length(imgs) > 0 ->
+        hd imgs
+      true ->
+        nil
+    end
+  end
 end

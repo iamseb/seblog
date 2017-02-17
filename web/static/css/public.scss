@@ -1,7 +1,7 @@
 @import "fontello";
 
 // Here go any variables you want to overwrite
-$picnic-primary: #ED8A2E;
+$picnic-primary: #00ab6b;
 // Now import picnic and a couple of plugins
 @import "node_modules/picnic/src/picnic";
 
@@ -12,6 +12,8 @@ main {
     color: #222;
     background: #efefef;
     font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Open Sans","Helvetica Neue",sans-serif!important;
+    font-size: 16pt;
+    font-weight: normal;
 }
 
 body {
@@ -27,12 +29,15 @@ nav .brand {
   padding: 0 !important;
 }
 
-h1, h2, h3 {
-    font-weight: normal;
+h1, h2 {
+    a {
+      color: #222;
+    }
+    padding: 0.3em 0;
 }
 
 
-div.content.post img {
+article.content.post img {
     width: 100% !important;
     height: auto !important;
 }
@@ -46,7 +51,7 @@ div.progressive-container {
   background-repeat: no-repeat !important;
 }
 
-div.content.post img[data-fullsize] {
+article.content.post img[data-fullsize] {
   -webkit-filter:blur(4px) grayscale(70%);
   -ms-filter:blur(4px) grayscale(70%);
   filter:blur(4px) grayscale(70%);
@@ -54,30 +59,36 @@ div.content.post img[data-fullsize] {
   display: block;
 }
 
-div.content.post iframe {
+article.content.post iframe {
     width: 100% !important;
     min-height: 400px !important;
 }
 
 
-div.content.page img {
+article.content.page img {
     max-width: 100%;
 }
 
-div.content.page iframe {
+article.content.page iframe {
     width: auto !important;
     height: auto !important;
     max-width: 100%;
 }
 
 
-div.content.post {
+article.content.post {
   background: #fff;
   border-radius: 2px;
   padding: 1em;
   padding-top: 0;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2),transparent 0 0 0,transparent 0 0 0,transparent 0 0 0,transparent 0 0 0;
   margin-bottom: 2em;
+}
+
+article {
+  summary {
+    color: rgba(0, 0, 0, .45);
+  }
 }
 
 main {
@@ -87,10 +98,17 @@ main {
 
 div.sidebar {
   padding: 1em 0 0 2em;
-  font-size: 0.9em;
+  font-size: 11pt !important;
 }
 
 
 div.pagination div:first-child {
   text-align: right;
+}
+
+p.post-details {
+  font-size: 10.5pt;
+  span {
+    font-size: 9pt;
+  }
 }

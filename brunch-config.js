@@ -2,7 +2,10 @@ exports.config = {
   // See http://brunch.io/#documentation for docs.
   files: {
     javascripts: {
-      joinTo: "js/app.js",
+      joinTo: {
+        "js/app.js": [/^(web\/static\/js)/, /^(node_modules)/, /^(web\/static\/vendor)|(deps)/],
+        "js/public.js": /^(node_modules\/jquery)/
+      },
 
       // To use a separate vendor.js bundle, specify two files path
       // https://github.com/brunch/brunch/blob/stable/docs/config.md#files
@@ -15,7 +18,7 @@ exports.config = {
       // https://github.com/brunch/brunch/tree/master/docs#concatenation
       order: {
         before: [
-          "web/static/vendor/js/*.js"
+          "web/static/vendor/js/medium-editor.js"
         ]
       }
     },
@@ -71,8 +74,12 @@ exports.config = {
     enabled: true,
     // Whitelist the npm deps to be pulled in as front-end assets.
     // All other deps in package.json will be excluded from the bundle.
-    whitelist: ["phoenix", "phoenix_html"],
+    whitelist: ["phoenix", "phoenix_html", "jquery-ui", "jquery", "jquery-sortable", "blueimp-file-upload", "jquery.iframe-transport"],
     styles: {
+    },
+    globals: {
+      $: 'jquery',
+      jQuery: 'jquery'
     }
   }
 };

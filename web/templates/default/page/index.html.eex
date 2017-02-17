@@ -1,11 +1,19 @@
 <div class="full two-third-800">
     <%= for post <- @posts do %>
     <br>
-    <div class="content post format-<%= post.format %>">
+    <article class="content post format-<%= post.format %>">
+        <p class="post-details"><a href="/">Seb Potter</a><br/>
+            <span>Yesterday <%= if post.read_time > 0 do %>&middot; <%= post.read_time %> minute read<% end %></span>
+        </p>
+        <%= if post_image(@conn, post) do %>
+        <figure>
+          <%= raw post_image(@conn, post) %>
+        </figure>
+        <% end %>
         <h2><a href="<%= page_path(@conn, :show, post.pub_date.year, post.pub_date.month, post.slug) %>"><%= raw post.title %></a></h2>
-        <p><%= raw post.excerpt %></p>
+        <summary><%= raw post_no_image(@conn, post) %></summary>
 
-    </div>
+    </article>
     <% end %>
     <div class="pagination flex two">
         <div>
@@ -20,7 +28,8 @@
 </div>
 <div class="sidebar">
     <div>
-        <h2>Seb Potter</h2>
+        <h3>Seb Potter</h3>
+        <hr />
         <%= markdown("sebpotter-intro") %>
     </div>
 </div>

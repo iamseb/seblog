@@ -1,20 +1,46 @@
-<script>
+<link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 
+<style type="text/css">
+    #content-preview { outline: none; }
+    #title-preview { outline: none; }
+
+    #image-panel img {
+      margin: 8px 16px;
+    }
+
+</style>
+
+
+<script>
 
 $(document).ready(function(){
 
-  if($('#post_content').length > 0){
+  var title_editor = new MediumEditor("#title-preview", { imageDragging: false });
+  title_editor.subscribe('editableInput', function (event, editable) {
+    $('#post_title').val(title_editor.getContent());
+  });
 
-    $('#title_preview').html($('#post_title').val());
-    $('#post_title').keyup(function(){
-      $('#title_preview').html($('#post_title').val());
+
+
+  var editor = new MediumEditor("#content-preview", { imageDragging: true });
+  editor.subscribe('editableInput', function (event, editable) {
+    $('#post_content').val(editor.getContent());
+  });
+
+  $(function () {
+    $('#content-preview').mediumInsert({
+        editor: editor
     });
-    $.getJSON('/admin/images/pallette/', function(data){
-      $.each(data.images, function(i, item){
-        $("<img>").attr("id", "image-" + item.slug).attr("src", item.thumbnail).attr("alt", item.name).data("fullsize", item.url).data("contentimage", item.contentimage).appendTo("#image-panel");
-      });
+  });
+
+
+  $.getJSON('/admin/images/pallette/', function(data){
+    $.each(data.images, function(i, item){
+      $("<img>").attr("id", "image-" + item.slug).attr("src", item.thumbnail).attr("alt", item.name).appendTo("#image-panel");
     });
-  }
+  });
+
+
 });
 
 </script>
