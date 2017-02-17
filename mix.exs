@@ -18,7 +18,7 @@ defmodule Seblog.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [mod: {Seblog, []},
-     applications: [:phoenix, :phoenix_html, :cowboy, :logger, :gettext,
+     applications: [:phoenix, :phoenix_html, :cowboy, :logger, :gettext, :timex,
                     :phoenix_ecto, :postgrex, :ex_aws, :httpoison, :arc, :arc_ecto]]
   end
 
@@ -49,7 +49,8 @@ defmodule Seblog.Mixfile do
      {:ex_aws, "~> 1.0.0"}, # Required if using Amazon S3
      {:mogrify, "~> 0.3.2"},
      {:mailgun, git: "https://github.com/chrismccord/mailgun/"},
-     {:html_sanitize_ex, "~> 1.0.0"}
+     {:html_sanitize_ex, "~> 1.0.0"},
+     {:timex, "~> 3.0"}
     ]
 
   end

@@ -2,7 +2,7 @@
     <%= for post <- @posts do %>
     <article class="content post format-<%= post.format %>">
         <p class="post-details"><a href="/">Seb Potter</a><br/>
-            <span>Yesterday <%= if post.read_time > 0 do %>&middot; <%= post.read_time %> minute read<% end %></span>
+            <span><%= relative_date(@conn, post) %> <%= if post.read_time > 0 do %>&middot; <%= post.read_time %> minute read<% end %></span>
         </p>
         <%= if post_image(@conn, post) do %>
         <figure>

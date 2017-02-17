@@ -13,4 +13,7 @@ defmodule Seblog.ViewHelper do
       _ -> link
     end
   end
+  def relative_date(conn, post) do
+    Timex.from_now(Ecto.DateTime.to_erl(post.pub_date))
+  end
 end
