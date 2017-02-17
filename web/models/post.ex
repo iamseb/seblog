@@ -96,4 +96,18 @@ defmodule Seblog.Post do
         nil
     end
   end
+
+  def embedded_link(post) do
+    links = Regex.run(~r/.*<a .*href="(.*)".*>Read Article<\/a>.*/Ums, post.excerpt, capture: :all_but_first)
+    cond do
+      links == nil ->
+        nil
+      length(links) > 0 ->
+        links |> List.last
+      true ->
+        nil
+    end
+  end
+
+
 end
