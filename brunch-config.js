@@ -4,7 +4,8 @@ exports.config = {
     javascripts: {
       joinTo: {
         "js/app.js": [/^(web\/static\/js)/, /^(node_modules)/, /^(web\/static\/vendor)|(deps)/],
-        "js/public.js": /^(node_modules\/jquery)/
+        "js/public.js": /^(node_modules\/jquery)/,
+        "js/editor.js": /^(web\/static\/vendor)/
       },
 
       // To use a separate vendor.js bundle, specify two files path
@@ -25,7 +26,8 @@ exports.config = {
     stylesheets: {
       joinTo: {
         "css/app.css": ["web/static/css/app.scss", "web/static/vendor/css/**"],
-        "css/public.css": "web/static/css/public.scss"
+        "css/public.css": "web/static/css/public.scss",
+        "css/editor.css": "web/static/vendor/css/**"
       }
     },
     templates: {

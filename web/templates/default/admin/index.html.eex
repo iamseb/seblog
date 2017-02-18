@@ -3,6 +3,7 @@
 <table class="table">
   <thead>
     <tr>
+      <th>Name</th>
       <th>Email</th>
       <th>Password hash</th>
 
@@ -12,6 +13,7 @@
   <tbody>
 <%= for admin <- @admins do %>
     <tr>
+      <td><%= admin.name %></td>
       <td><%= admin.email %></td>
       <td><%= admin.password_hash %></td>
 

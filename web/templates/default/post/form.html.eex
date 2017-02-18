@@ -1,7 +1,7 @@
 <%= form_for @changeset, @action, fn f -> %>
 
 
-<div class="row">
+<div class="row hidden">
 
     <div class="col-md-12">
     <%= if @changeset.action do %>
@@ -63,9 +63,8 @@
   </div>
 
   <div class="col-md-10">
-    <img src="https://www.mountaineers.org/images/placeholder-images/placeholder-400-x-400/image_preview" /><br />
-    <h2 id="title-preview"><%= raw @post.title %></h2>
-    <div id="content-preview"><%= raw @post.content %></div>
+    <h2 id="title-preview"><%= raw @post.title || "" %></h2>
+    <div id="content-preview"><%= raw @post.content || "" %></div>
 
     <div class="form-group pull-right">
       <%= submit "Submit", class: "btn btn-primary" %>

@@ -2,14 +2,15 @@ defmodule Seblog.Admin do
     use Seblog.Web, :model
 
     schema "admins" do
+        field :name, :string, default: "Admin"
         field :email, :string
-        field :password, :string, virtual: true 
+        field :password, :string, virtual: true
         field :password_hash, :string
 
         timestamps
     end
 
-    @required_fields ~w(email password)
+    @required_fields ~w(name email password)
     @optional_fields ~w()
 
     @doc """
@@ -20,7 +21,7 @@ defmodule Seblog.Admin do
     """
     def changeset(model, params \\ %{}) do
         model
-        |> cast(params, ~w(email), [])
+        |> cast(params, ~w(name email), [])
         |> validate_format(:email, ~r/@/)
     end
 

@@ -37,6 +37,9 @@ defmodule Seblog.Router do
     resources "/tags", TagController
     resources "/images", ImageController
     resources "/themes", ThemeController
+    get "/", SessionController, :check_login
+    get "/login", SessionController, :check_login
+    get "/logout", SessionController, :delete
   end
 
   scope "/", Selog do

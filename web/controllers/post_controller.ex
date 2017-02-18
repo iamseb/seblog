@@ -25,7 +25,7 @@ defmodule Seblog.PostController do
 
   def new(conn, _params) do
     changeset = Post.changeset(%Post{})
-    render(conn, "new.html", changeset: changeset)
+    render(conn, "new.html", changeset: changeset, post: %Post{})
   end
 
   def create(conn, %{"post" => post_params}) do

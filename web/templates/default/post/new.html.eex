@@ -2,6 +2,6 @@
 
 <%= render "form.html", changeset: @changeset,
                         action: post_path(@conn, :create),
-                        post: %{} %>
+                        post: @post %>
 
 <%= link "Back", to: post_path(@conn, :index) %>
