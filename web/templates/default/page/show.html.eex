@@ -1,7 +1,16 @@
 <div class="full">
     <br>
-    <div class="page content post format-<%= @post.format %>">
-        <h2><%= raw @post.title %></h2>
-        <p><%= raw @post.content %></p>
-    </div>
+    <article class="content post format-<%= @post.format %>">
+        <p class="post-details"><a href="/">Seb Potter</a><br/>
+            <span><%= relative_date(@conn, @post) %> <%= if @post.read_time > 0 do %>&middot; <%= @post.read_time %> minute read<% end %></span>
+        </p>
+        <%= if post_image(@conn, @post) do %>
+        <figure>
+          <%= raw post_image(@conn, @post) %>
+        </figure>
+        <% end %>
+        <h2><a href="<%= post_link(@conn, @post) %>"><%= raw @post.title %></a></h2>
+        <summary><%= raw post_content_no_image(@conn, @post) %></summary>
+
+    </article>
 </div>

@@ -21,6 +21,7 @@ defmodule Seblog.Web do
       use Ecto.Schema
       @primary_key {:id, :binary_id, autogenerate: true}
       @primary_key_type :binary_id
+      @foreign_key_type :binary_id
 
       import Ecto
       import Ecto.Changeset

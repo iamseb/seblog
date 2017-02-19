@@ -42,9 +42,10 @@ defmodule Seblog.Router do
     get "/logout", SessionController, :delete
   end
 
-  scope "/", Selog do
+  scope "/", Seblog do
     pipe_through [:browser, :browser_auth]
     get "/:year/:date/:slug/write", PostController, :edit
+    get "/write", PostController, :new_inline
   end
 
   scope "/", Seblog do

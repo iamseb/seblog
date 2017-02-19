@@ -1,0 +1,17 @@
+
+body {
+  background: #fafafa;
+  padding: 0 20% !important;
+}
+
+#content-preview { outline: none; }
+#title-preview { outline: none; }
+
+#image-panel img {
+  margin: 8px 16px;
+}
+
+.medium-editor-placeholder:after {
+  font-style: normal !important;
+  color: rgba(0,0,0, 0.8);
+}

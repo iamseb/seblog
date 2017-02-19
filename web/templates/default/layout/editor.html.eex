@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <%= render_existing view_module(@conn), "meta.html", assigns %>
+    <title><%= assigns[:page_title] || site_name(@conn) %> <%= site_title(@conn) %></title>
+    <meta id="viewport" name="viewport" content ="width=device-width, initial-scale=1.0, overflow:hidden, user-scalable=no" />
+    <link rel="stylesheet" href="<%= static_path(@conn, "/css/public.css") %>">
+    <link rel="stylesheet" href="<%= static_path(@conn, "/css/editor.css") %>">
+  </head>
+
+  <body>
+    <nav class="demo">
+      <%# <h1>Seb Potter</h1> %>
+      <a href="/" class="brand">
+        <img class="logo" src="<%= static_path(@conn, "/images/seblogo.png") %>" />
+        <span>From the mind of Seb</span>
+      </a>
+
+      <!-- responsive-->
+      <input id="bmenub" type="checkbox" class="show">
+      <label for="bmenub" class="burger pseudo button">menu</label>
+
+      <div class="menu">
+        <%= if logged_in?(@conn) do %>Hello <%= current_admin(@conn).name %>,
+        <a href="<%= post_path(@conn, :new)%>">Write a story</a><% else %>
+        <a href="https://www.linkedin.com/in/sebpotter" class="pseudo button icon-globe">Profile</a>
+        <a href="https://github.com/iamseb/seblog" target="_blank" class="pseudo button icon-g">Github</a>
+        <% end %>
+      </div>
+    </nav>
+    <main>
+      <div class="flex one three-800">
+          <%= render @view_module, @view_template, assigns %>
+      </div>
+    </main>
+    <script src="<%= static_path(@conn, "/js/editor.js") %>"></script>
+    <%= render_existing view_module(@conn), "scripts.html", assigns %>
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $("img[data-fullsize]").each(function(){
+          var imgLarge = new Image();
+          imgLarge.src = $(this).data("fullsize");
+          var outer_image = $(this);
+          imgLarge.onload = function(){
+            outer_image.wrap("<div class=\"progressive-container\"></div>");
+            outer_image.parent().css("background", "url("+ outer_image.data("fullsize") + ")");
+            outer_image.animate({opacity: 0}, 2000);
+          }
+        });
+        var loc = window.location.host;
+        $('a[href^=http]:not([href*="' + loc + '"])')
+          .attr('target','_blank');
+      });
+
+    </script>
+    <%= if google_analytics(@conn) != "" do %>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', '<%= google_analytics(@conn) %>', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+    <% end %>
+  </body>
+</html>

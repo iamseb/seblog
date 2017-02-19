@@ -1,31 +1,33 @@
 <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 
-<style type="text/css">
-    #content-preview { outline: none; }
-    #title-preview { outline: none; }
-
-    #image-panel img {
-      margin: 8px 16px;
-    }
-
-</style>
-
-
 <script>
 
 $(document).ready(function(){
 
-  var title_editor = new MediumEditor("#title-preview", { imageDragging: false });
-  title_editor.subscribe('editableInput', function (event, editable) {
-    $('#post_title').val(title_editor.getContent());
+  var title_editor = new MediumEditor("#title-preview", {
+    imageDragging: false,
+    toolbar: {
+      buttons: []
+    },
+    placeholder: {
+      text: "Title",
+      hideOnClick: true
+    }
   });
 
-
-
-  var editor = new MediumEditor("#content-preview", { imageDragging: true });
-  editor.subscribe('editableInput', function (event, editable) {
-    $('#post_content').val(editor.getContent());
+  var editor = new MediumEditor("#content-preview", {
+    imageDragging: true,
+    buttonLabels: 'fontawesome',
+    placeholder: {
+      text: "Tell your story...",
+      hideOnClick: true
+    },
+    paste: {
+      forcePlainText: false,
+      cleanPastedHTML: true
+    }
   });
+
 
   $(function () {
     $('#content-preview').mediumInsert({

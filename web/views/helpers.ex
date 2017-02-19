@@ -4,7 +4,8 @@ defmodule Seblog.ViewHelper do
   def site_name(conn), do: Application.get_env(:seblog, Seblog.Endpoint)[:site_name]
   def site_title(conn), do: Application.get_env(:seblog, Seblog.Endpoint)[:site_title]
   def google_analytics(conn), do: Application.get_env(:seblog, Seblog.Endpoint)[:google_analytics]
-  def post_no_image(conn, post), do: Seblog.Post.summary_no_image(post)
+  def post_summary_no_image(conn, post), do: Seblog.Post.summary_no_image(post)
+  def post_content_no_image(conn, post), do: Seblog.Post.content_no_image(post)
   def post_image(conn, post), do: Seblog.Post.first_image(post)
   def post_link(conn, post) do
     link = Seblog.Post.embedded_link(post)

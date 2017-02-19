@@ -10,7 +10,7 @@
         </figure>
         <% end %>
         <h2><a href="<%= post_link(@conn, post) %>"><%= raw post.title %></a></h2>
-        <summary><%= raw post_no_image(@conn, post) %></summary>
+        <summary><%= raw post_summary_no_image(@conn, post) %></summary>
 
     </article>
     <% end %>

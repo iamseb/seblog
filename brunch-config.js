@@ -3,9 +3,9 @@ exports.config = {
   files: {
     javascripts: {
       joinTo: {
-        "js/app.js": [/^(web\/static\/js)/, /^(node_modules)/, /^(web\/static\/vendor)|(deps)/],
+        "js/app.js": [/^(web\/static\/js\/app\.js)/, /^(node_modules)/, /^(web\/static\/vendor)|(deps)/],
         "js/public.js": /^(node_modules\/jquery)/,
-        "js/editor.js": /^(web\/static\/vendor)/
+        "js/editor.js": [/^(web\/static\/js\/editor\.js)/, /^(node_modules)/, /^(web\/static\/vendor)/],
       },
 
       // To use a separate vendor.js bundle, specify two files path
@@ -25,13 +25,13 @@ exports.config = {
     },
     stylesheets: {
       joinTo: {
-        "css/app.css": ["web/static/css/app.scss", "web/static/vendor/css/**"],
+        "css/app.css": ["web/static/css/app.scss", "web/static/vendor/css/*"],
         "css/public.css": "web/static/css/public.scss",
-        "css/editor.css": "web/static/vendor/css/**"
+        "css/editor.css": ["web/static/vendor/css/*", "web/static/vendor/css/themes/beagle.css", "web/static/css/editor.scss"]
       }
     },
     templates: {
-      joinTo: "js/app.js"
+      joinTo: ["js/app.js", "js.editor.js"]
     }
   },
 
@@ -68,7 +68,8 @@ exports.config = {
 
   modules: {
     autoRequire: {
-      "js/app.js": ["web/static/js/app"]
+      "js/app.js": ["web/static/js/app"],
+      "js/editor.js": ["web/static/js/editor"]
     }
   },
 

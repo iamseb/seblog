@@ -25,8 +25,14 @@ defmodule Seblog.PostController do
 
   def new(conn, _params) do
     changeset = Post.changeset(%Post{})
-    render(conn, "new.html", changeset: changeset, post: %Post{})
+    render(conn, "new.html", changeset: changeset, post: %Post{}, layout: {Seblog.LayoutView, "editor.html"})
   end
+
+  def new_inline(conn, _params) do
+    changeset = Post.changeset(%Post{})
+    render(conn, "new_inline.html", changeset: changeset, post: %Post{}, layout: {Seblog.LayoutView, "editor.html"})
+  end
+
 
   def create(conn, %{"post" => post_params}) do
     changeset = Post.changeset(%Post{}, post_params)
@@ -39,7 +45,7 @@ defmodule Seblog.PostController do
         |> put_flash(:info, "Post created successfully.")
         |> redirect(to: post_path(conn, :index))
       {:error, changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        render(conn, "new.html", changeset: changeset, post: %Post{})
     end
   end
 

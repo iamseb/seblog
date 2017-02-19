@@ -8,13 +8,14 @@ defmodule Seblog.Post do
     field :format, :string, default: "post"
     field :content, :string
     field :excerpt, :string
-    field :read_time, :integer, default: "0"
+    field :read_time, :integer, default: 0
     field :pub_date, Ecto.DateTime, default: Ecto.DateTime.utc
     many_to_many :tags, Seblog.Tag, join_through: "posts_tags"
+    belongs_to :author, Seblog.Admin
     timestamps
   end
 
-  @required_fields ~w(title status content)
+  @required_fields ~w(title status content author_id)
   @optional_fields ~w(pub_date)
 
   @doc """
@@ -28,6 +29,7 @@ defmodule Seblog.Post do
     |> cast(params, @required_fields, @optional_fields)
     |> make_excerpt
     |> slugify
+    |> foreign_key_constraint(:author_id)
   end
 
   def make_excerpt(changeset) do
@@ -82,6 +84,11 @@ defmodule Seblog.Post do
 
   def summary_no_image(post) do
     post.excerpt |>
+      String.replace(~r/\<img .*\>/, "")
+  end
+
+  def content_no_image(post) do
+    post.content |>
       String.replace(~r/\<img .*\>/, "")
   end
 
