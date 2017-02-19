@@ -1,0 +1,8 @@
+Flow for new article:
+
+POST to /write
+create blank Post
+redirect to /slug/write/
+edit
+???
+profit!

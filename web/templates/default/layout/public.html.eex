@@ -24,7 +24,7 @@
 
       <div class="menu">
         <%= if logged_in?(@conn) do %>Hello <%= current_admin(@conn).name %>,
-        <a href="<%= post_path(@conn, :new)%>">Write a story</a><% else %>
+        <a href="<%= post_path(@conn, :new_inline)%>">Write a story</a><% else %>
         <a href="https://www.linkedin.com/in/sebpotter" class="pseudo button icon-globe">Profile</a>
         <a href="https://github.com/iamseb/seblog" target="_blank" class="pseudo button icon-g">Github</a>
         <% end %>
