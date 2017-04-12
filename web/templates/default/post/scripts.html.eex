@@ -29,17 +29,19 @@ $(document).ready(function(){
   });
 
 
+  var update_draft = function() {
+  }
+
   $(function () {
     $('#content-preview').mediumInsert({
         editor: editor
     });
   });
 
-
-  $.getJSON('/admin/images/pallette/', function(data){
-    $.each(data.images, function(i, item){
-      $("<img>").attr("id", "image-" + item.slug).attr("src", item.thumbnail).attr("alt", item.name).appendTo("#image-panel");
-    });
+  $('#publish-button').click(function(e){
+    e.preventDefault();
+    var title_html = title_editor.getContent();
+    alert(title_html);
   });
 
 

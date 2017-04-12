@@ -44,7 +44,7 @@ defmodule Seblog.Router do
 
   scope "/", Seblog do
     pipe_through [:browser, :browser_auth]
-    get "/:year/:date/:slug/write", PostController, :edit
+    get "/:year/:date/:slug/write", PostController, :edit_inline
     get "/write", PostController, :new_inline
   end
 

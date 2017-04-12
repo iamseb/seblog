@@ -81,6 +81,12 @@ defmodule Seblog.PostController do
     render(conn, "edit.html", post: post, changeset: changeset)
   end
 
+  def edit_inline(conn, %{"slug" => slug}) do
+    post = Repo.get_by!(Post, slug: slug)
+    changeset = Post.changeset(post)
+    render(conn, "edit_inline.html", post: post, changeset: changeset, layout: {Seblog.LayoutView, "editor.html"})
+  end
+
 
   def update(conn, %{"id" => id, "post" => post_params}) do
     post = Repo.get!(Post, id)

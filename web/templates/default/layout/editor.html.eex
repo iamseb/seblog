@@ -24,7 +24,7 @@
       <label for="bmenub" class="burger pseudo button">menu</label>
 
       <div class="menu">
-        <%= if logged_in?(@conn) do %><%= if @post.status != "publish" do %><%= link "Publish?", to: "/write", method: :post, class: "button small" %><% end %><% else %>
+        <%= if logged_in?(@conn) do %><%= if @post.status != "publish" do %><button id="publish-button" class="button small">Publish?</button><% end %><% else %>
         <a href="https://www.linkedin.com/in/sebpotter" class="pseudo button icon-globe">Profile</a>
         <a href="https://github.com/iamseb/seblog" target="_blank" class="pseudo button icon-g">Github</a>
         <% end %>

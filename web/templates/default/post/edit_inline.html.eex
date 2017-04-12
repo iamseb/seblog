@@ -1,0 +1,11 @@
+<div class="full">
+    <br>
+    <article class="content post format-<%= @post.format %>">
+        <p class="post-details"><a href="/">Seb Potter</a><br />
+        <span class="post-details">Editing draft</span>
+        </p>
+        <h2 id="title-preview"><%= raw @post.title %></h2>
+        <div id="content-preview"><%= raw @post.content %></div>
+
+    </article>
+</div>
